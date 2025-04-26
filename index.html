@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>rInsight - Campus Mental Health Analytics</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body { background: linear-gradient(#6B7280, #4B5563); }
+    .tabs { display: flex; flex-wrap: wrap; background: #1F2937; }
+    .tab { padding: 1rem; color: #D1D5DB; cursor: pointer; transition: all 0.3s; }
+    .tab.active { border-bottom: 2px solid #9333EA; color: #9333EA; }
+    .tab:hover { background: #374151; }
+    .gauge { transition: transform 0.3s; }
+    .pulse-critical { animation: pulse 1.5s infinite; }
+    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
+    .keyword-cloud { position: relative; height: 200px; }
+    .keyword { position: absolute; transition: all 0.3s; }
+    .keyword:hover { transform: scale(1.2); }
+    .neon-glow { text-shadow: 0 0 5px #9333EA; }
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+    @media (max-width: 768px) { .tabs { flex-direction: column; } .tab-content { padding: 0.5rem; } }
+  </style>
+</head>
+<body class="text-gray-200">
+  <!-- Header -->
+  <header class="bg-purple-800 text-purple-300 p-4 fixed w-full top-0 shadow-md" style="box-shadow: 0 0 10px #9333EA;">
+    <div class="container mx-auto flex justify-between items-center">
+      <h1 class="text-2xl font-bold neon-glow">rInsight</h1>
+      <nav>
+        <a href="#" class="mr-4 hover:text-purple-400">Home</a>
+        <a href="#" class="hover:text-purple-400">Logout</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="container mx-auto mt-20 p-4">
+    <!-- Tab Navigation -->
+    <div class="tabs">
+      <div class="tab active" data-tab="academic"><i class="fas fa-book mr-2"></i>Academic</div>
+      <div class="tab" data-tab="financial"><i class="fas fa-dollar-sign mr-2"></i>Financial</div>
+      <div class="tab" data-tab="health"><i class="fas fa-heart mr-2"></i>Health</div>
+      <div class="tab" data-tab="housing"><i class="fas fa-home mr-2"></i>Housing</div>
+      <div class="tab" data-tab="social"><i class="fas fa-users mr-2"></i>Social</div>
+      <div class="tab" data-tab="all"><i class="fas fa-globe mr-2"></i>All Categories</div>
+      <div class="tab" data-tab="keywords"><i class="fas fa-star mr-2"></i>Keyword Insights</div>
+    </div>
+
+    <!-- Tab Contents -->
+    <!-- Academic Tab -->
+    <div class="tab-content active" id="academic">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <div class="bg-purple-900 p-4 rounded-lg shadow-md border border-purple-300 pulse-critical">
+          <h3 class="text-lg font-bold text-purple-300 neon-glow">Academic Stress Score</h3>
+          <canvas id="academic-gauge" height="150"></canvas>
+          <p class="text-red-400 text-center mt-2">Critical: Score 44</p>
+          <p class="text-gray-400 mt-2">Trend: +25% stress this week</p>
+          <p class="text-sm text-gray-300 mt-2 neon-glow">Recommendation: Host finals prep workshop</p>
+        </div>
+        <div class="bg-purple-900 p-4 rounded-lg shadow-md border border-purple-300">
+          <h3 class="text-lg font-bold text-purple-300 neon-glow">Weekly Trend</h3>
+          <canvas id="academic-trend" height="150"></canvas>
+          <form class="mt-4">
+            <input type="text" id="academic-action" class="w-full p-2 bg-gray-800 text-gray-200 rounded" placeholder="Log an action..." required>
+            <button type="submit" class="mt-2 w-full bg-purple-500 text-white p-2 rounded hover:bg-purple-600">Log Action</button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <!-- Financial, Health, Housing, Social Tabs (Similar Structure) -->
+    <!-- All Categories Tab -->
+    <div class="tab-content" id="all">
+      <div class="bg-purple-900 p-4 rounded-lg shadow-md mt-4 border border-purple-300">
+        <h3 class="text-lg font-bold text-purple-300 neon-glow">All Categories Overview</h3>
+        <canvas id="radar-chart" height="200"></canvas>
+        <p class="text-gray-400 mt-2">Summary: Academic stress spiked 25% pre-finals</p>
+        <p class="text-sm text-gray-300 mt-2 neon-glow">Recommendation: Host campus-wide wellness fair</p>
+      </div>
+    </div>
+    <!-- Keyword Insights Tab -->
+    <div class="tab-content" id="keywords">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <div class="bg-purple-900 p-4 rounded-lg shadow-md border border-purple-300">
+          <h3 class="text-lg font-bold text-purple-300 neon-glow">Keyword Cloud</h3>
+          <div class="keyword-cloud relative h-48">
+            <span class="keyword text-purple-300 neon-glow" style="font-size: 1.5em; left: 20%; top: 30%;">cooked</span>
+            <span class="keyword text-purple-400" style="font-size: 1.2em; left: 50%; top: 50%;">no prep</span>
+            <span class="keyword text-purple-400" style="font-size: 1em; left: 70%; top: 20%;">stress</span>
+          </div>
+        </div>
+        <div class="bg-purple-900 p-4 rounded-lg shadow-md border border-purple-300">
+          <h3 class="text-lg font-bold text-purple-300 neon-glow">Recommendations (Gemini)</h3>
+          <ul class="text-gray-300">
+            <li class="py-2 border-b border-gray-700">For “cooked”: Promote Quizlet, peer tutoring <span class="text-purple-400 text-sm neon-glow">Generated by Gemini</span></li>
+            <li class="py-2 border-b border-gray-700">For “no prep”: Host finals prep workshop <span class="text-purple-400 text-sm neon-glow">Generated by Gemini</span></li>
+          </ul>
+          <h4 class="text-md font-semibold text-purple-300 mt-4 neon-glow">Keyword Trends</h4>
+          <table class="w-full text-gray-400 text-sm">
+            <tr class="border-b border-gray-700"><th>Keyword</th><th>Frequency</th><th>Category</th></tr>
+            <tr><td class="neon-glow">cooked</td><td>15</td><td>Academic</td></tr>
+            <tr><td>no prep</td><td>10</td><td>Academic</td></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="bg-purple-800 text-purple-300 p-4 mt-4" style="box-shadow: 0 0 10px #9333EA;">
+    <div class="container mx-auto text-center">
+      <p>© 2025 rInsight. Contact: support@rinsight.com | Powered by <span class="neon-glow">Gemini</span></p>
+    </div>
+  </footer>
+
+  <script>
+    // Tab Switching
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.tab).classList.add('active');
+      });
+    });
+
+    // Mock API call to Flask
+    async function fetchStressScores() {
+      return {
+        academic: { score: 44, trend: "+25%", status: "Critical" },
+        financial: { score: 50, trend: "+15%", status: "Moderate" },
+        health: { score: 70, trend: "Stable", status: "Low" },
+        housing: { score: 60, trend: "+10%", status: "Moderate" },
+        social: { score: 55, trend: "+12%", status: "Moderate" }
+      };
+    }
+
+    // Academic Gauge
+    const academicGauge = document.getElementById('academic-gauge').getContext('2d');
+    function drawGauge(ctx, score, color) {
+      ctx.beginPath();
+      ctx.arc(75, 75, 60, 0, 2 * Math.PI);
+      ctx.strokeStyle = '#4B5563';
+      ctx.lineWidth = 10;
+      ctx.stroke();
+      ctx.beginPath();
+      ctx.arc(75, 75, 60, -Math.PI / 2, (-Math.PI / 2) + (score / 100) * 2 * Math.PI);
+      ctx.strokeStyle = color;
+      ctx.lineWidth = 10;
+      ctx.stroke();
+      ctx.font = '20px Poppins';
+      ctx.fillStyle = color;
+      ctx.textAlign = 'center';
+      ctx.fillText(score, 75, 80);
+    }
+    drawGauge(academicGauge, 44, '#EF4444');
+
+    // Academic Trend Graph
+    const academicTrend = document.getElementById('academic-trend').getContext('2d');
+    new Chart(academicTrend, {
+      type: 'line',
+      data: {
+        labels: ['Apr 18', 'Apr 19', 'Apr 20', 'Apr 21', 'Apr 22', 'Apr 23', 'Apr 24'],
+        datasets: [{ label: 'Academic', data: [60, 55, 50, 45, 40, 40, 44], borderColor: '#EF4444', fill: false }]
+      },
+      options: { responsive: true, animation: { duration: 1000 } }
+    });
+
+    // Radar Chart for All Categories
+    const radarChart = document.getElementById('radar-chart').getContext('2d');
+    new Chart(radarChart, {
+      type: 'radar',
+      data: {
+        labels: ['Academic', 'Financial', 'Health', 'Housing', 'Social'],
+        datasets: [{
+          label: 'Stress Scores',
+          data: [44, 50, 70, 60, 55],
+          backgroundColor: 'rgba(147, 51, 234, 0.2)',
+          borderColor: '#9333EA',
+          pointBackgroundColor: '#9333EA'
+        }]
+      },
+      options: { responsive: true, animation: { duration: 1500 } }
+    });
+
+    // Action Logging
+    document.querySelector('#academic form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const action = document.getElementById('academic-action').value;
+      alert(`Action logged: ${action}`);
+      document.getElementById('academic-action').value = '';
+    });
+  </script>
+</body>
+</html>

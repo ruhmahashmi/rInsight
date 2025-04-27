@@ -1,14 +1,24 @@
-title,text,date,upvotes
-Econ with Mian Dai,Hello! Has anyone had any Econ classes with Mian Dai and know how her exams are? Especially her midterms? Any help would be appreciated. ,2025-04-26 17:23:50,2
-"URGENT Summer Course Choosing (CS375, CS360, CS432)","I’m planning to take CS360 with Jeremy Johnson and CS432 with Sean Grimes, and the rest of my courses are pretty chill. I wanted to take CS375 with Galen Long, but they switched it to Boris, so now I’m unsure. How is Boris? CS432 is just an elective for me, but CS375 is part of my concentration. I'm worried they might end up being too hard. I'm a sophomore — I’ve taken up to CS260 so far, but I can’t take CS283 next term because I have to leave before finals for study abroad, and Brian Stuart didn’t let me take it.",2025-04-26 10:05:28,3
-PLEASE help me choose between Villanova and Drexel for Engineering.,"Decision day is so soon so I'm freaking out. I'll be going in as a mechanical engineering major and will be commuting to both schools. The price is only a $2000 difference (Drexel is cheaper). The pros for Drexel would be the Co-Op and Diversity, with the quarter system being a con. The pros for Nova are the alumni network and ranking, with the con being a lack of diversity. Any help would be greatly appreciated!!
+id,title,text,date,upvotes,comments,sentiment,category,keywords,week
+1k8spco,Need Help with Housing!!!,"I'll be a first year master's student in the fall quarter, and I need to find housing but I'm from California. Are there specific areas to avoid? Specific landlords / realtors to avoid? And how early should I try to find housing? Would it be too late to find an apartment if I go look at some in August? (My program starts September 9th). Also if anyone is a graduate student, do people typically rent studios or try to find roommates?",2025-04-26 21:39:15,1,0,-0.3387182853493089,housing,"['housing', 'roommate']",7
+1k8nlzt,Econ with Mian Dai,Hello! Has anyone had any Econ classes with Mian Dai and know how her exams are? Especially her midterms? Any help would be appreciated. ,2025-04-26 17:23:50,2,0,-0.6501953756073036,academic,"['exam', 'midterms']",7
+1k8dq34,"URGENT Summer Course Choosing (CS375, CS360, CS432)","I’m planning to take CS360 with Jeremy Johnson and CS432 with Sean Grimes, and the rest of my courses are pretty chill. I wanted to take CS375 with Galen Long, but they switched it to Boris, so now I’m unsure. How is Boris? CS432 is just an elective for me, but CS375 is part of my concentration. I'm worried they might end up being too hard. I'm a sophomore — I’ve taken up to CS260 so far, but I can’t take CS283 next term because I have to leave before finals for study abroad, and Brian Stuart didn’t let me take it.",2025-04-26 10:05:28,3,3,0.01532239233920163,academic,"['finals', 'study']",7
+1k8dfqv,PLEASE help me choose between Villanova and Drexel for Engineering.,"Decision day is so soon so I'm freaking out. I'll be going in as a mechanical engineering major and will be commuting to both schools. The price is only a $2000 difference (Drexel is cheaper). The pros for Drexel would be the Co-Op and Diversity, with the quarter system being a con. The pros for Nova are the alumni network and ranking, with the con being a lack of diversity. Any help would be greatly appreciated!!
 
+<<<<<<< HEAD
 ",2025-04-26 09:51:50,1
 Advice for an incoming international student?,"I’m majoring in Game Design & Production, planning to minor in Animation. I’m basically looking for anything I should know as an incoming student, so any and all help is greatly appreciated. I would also like some advice regarding the co-op program, like whether or not the 5 years path is worth it over the 4 years one. Thanks in advance!",2025-04-26 06:51:37,1
 *FRESHMAN ADVICE*,"Just thought I’d do a good deed today and give 1st years some advice. Don’t walk, fucking sprint away from the summit. Don’t let them fool you with the fancy apartment ads or whatever. The management is atrocious and the apartments are terrible. You WILL NOT hear a good story about that place😭",2025-04-25 22:51:56,48
 graduate housing/apartments,"hi guys, i’m an incoming graduate student coming from nyc and im wondering what’s are some cheap and decent places around campus to live? i don’t know much about the area and if anyone is looking for a female roommate pls dm me! my budget is around $1000.",2025-04-25 15:56:24,1
 Transgender Students and Dormatories,"Hi! I'm a trans newly admitted student to Drexel, and I was just wondering about what the school does about housing for Trans students.",2025-04-25 14:50:53,10
 Couches to Nap On,"ongoing list
+=======
+",2025-04-26 09:51:50,2,14,0.11095618720816192,academic,"['bet', 'co-op']",7
+1k8a7jw,Advice for an incoming international student?,"I’m majoring in Game Design & Production, planning to minor in Animation. I’m basically looking for anything I should know as an incoming student, so any and all help is greatly appreciated. I would also like some advice regarding the co-op program, like whether or not the 5 years path is worth it over the 4 years one. Thanks in advance!",2025-04-26 06:51:37,1,0,-0.2562386365191459,academic,['co-op'],7
+1k82wvk,*FRESHMAN ADVICE*,"Just thought I’d do a good deed today and give 1st years some advice. Don’t walk, fucking sprint away from the summit. Don’t let them fool you with the fancy apartment ads or whatever. The management is atrocious and the apartments are terrible. You WILL NOT hear a good story about that place😭",2025-04-25 22:51:56,51,10,-0.029933585641435223,academic,[],7
+1k7u978,graduate housing/apartments,"hi guys, i’m an incoming graduate student coming from nyc and im wondering what’s are some cheap and decent places around campus to live? i don’t know much about the area and if anyone is looking for a female roommate pls dm me! my budget is around $1000.",2025-04-25 15:56:24,2,2,-0.33005034941064637,housing,"['housing', 'roommate']",7
+1k7spkf,Transgender Students and Dormatories,"Hi! I'm a trans newly admitted student to Drexel, and I was just wondering about what the school does about housing for Trans students.",2025-04-25 14:50:53,8,12,0.060370990424821525,housing,"['dorm', 'housing']",7
+1k7r3v9,Couches to Nap On,"ongoing list
+>>>>>>> 86f78de98e66d6d029156579cb2aabe84fddcf73
 
 GHALL
 first floor
@@ -44,6 +54,7 @@ first floor
 
 PENNONI (Bentley)
 first floor
+<<<<<<< HEAD
 - by the fireplace",2025-04-25 13:45:40,20
 Drexel flea market this weekend moved to Sunday due to rain,,2025-04-25 09:24:18,30
 placement exam question,"when i check the drexel website it says there are 2 types of math exams based on what you major in, calculus and something else, so which one will i have to take as a bs econ major?",2025-04-25 08:26:46,0
@@ -52,19 +63,30 @@ Cheapest student housing available?,Private room preferred but no necessary ,202
 Sorority hazing: parents are scared because of some old reports. Is it really a factor to consider?,"Based on PA law, the university apparently publishes summaries of hazing incidents. These are super vague though and I think are scaring my parents more than they should. Does anyone know what actually happens? ",2025-04-24 15:30:02,19
 math 101 midterm #1,I'm taking Math 101 this semester with Antanolii Grinshpan. Is the first midterm difficult? What should i know?,2025-04-23 20:54:25,1
 Roommates,"Looking for 2 roommates (preferably girls)!
+=======
+- by the fireplace",2025-04-25 13:45:40,21,2,-0.47693258420791607,academic,[],7
+1k7kujh,Drexel flea market this weekend moved to Sunday due to rain,,2025-04-25 09:24:18,32,0,-0.21502435166935663,academic,[],7
+1k7jnu4,placement exam question,"when i check the drexel website it says there are 2 types of math exams based on what you major in, calculus and something else, so which one will i have to take as a bs econ major?",2025-04-25 08:26:46,0,4,0.27796371837057054,academic,"['exam', 'math']",7
+1k77mkw,Math,Does anyone know if they change the midterms for math 101? A few of my friends took math 101 during the fall quarter and i'm just now getting to it because I took other classes instead of math. the first exam / midterm is tomorrow at 8am. do they change it from fall depending on the teacher you have or does it have similar questions to the previous one? ,2025-04-24 20:18:47,2,2,-0.4127384071562088,academic,"['friends', 'exam', 'math', 'midterms']",7
+1k74kgi,Cheapest student housing available?,Private room preferred but no necessary ,2025-04-24 17:55:23,4,1,-0.06333243495660845,housing,['housing'],7
+1k713by,Sorority hazing: parents are scared because of some old reports. Is it really a factor to consider?,"Based on PA law, the university apparently publishes summaries of hazing incidents. These are super vague though and I think are scaring my parents more than they should. Does anyone know what actually happens? ",2025-04-24 15:30:02,18,7,-0.23393960681497894,academic,[],7
+1k6ffup,math 101 midterm #1,I'm taking Math 101 this semester with Antanolii Grinshpan. Is the first midterm difficult? What should i know?,2025-04-23 20:54:25,1,20,-0.48765756974725916,academic,['math'],7
+1k6egyp,Roommates,"Looking for 2 roommates (preferably girls)!
+>>>>>>> 86f78de98e66d6d029156579cb2aabe84fddcf73
 I found a property on 40th Street, just a 15-minute walk from campus. It’s a 3-bedroom, 3-bath apartment — each room has its own private bathroom and patio!
 
 Rent is $2,700 total, so $900 each. Utilities are split between the 3 of us. The space is big, fully furnished, and ready to move in.
 
 DM me for a video tour or more info!
 
-",2025-04-23 20:05:53,6
-How Can I Get an Exchange Semester?,"I’m a high school student in Germany, and I’m looking for the best university or Fachhochschule to pursue my bachelor’s degree, particularly one that offers a high chance of doing an exchange semester at Drexel University in the U.S.
+",2025-04-23 20:05:53,5,3,-0.007874826435130378,housing,"['bet', 'roommate']",7
+1k66yu9,How Can I Get an Exchange Semester?,"I’m a high school student in Germany, and I’m looking for the best university or Fachhochschule to pursue my bachelor’s degree, particularly one that offers a high chance of doing an exchange semester at Drexel University in the U.S.
 
 My goal is to include this exchange experience in my master’s application to Drexel, so it’s very important to me. I would really appreciate any insights or recommendations on which universities or Fachhochschulen in Germany are particularly known for their exchange programs with Drexel.
 
 So far, I’ve found the UAS7 Network, a consortium of seven German Universities of Applied Sciences, but I’m not sure which of these would be the best fit for my goal.
 
+<<<<<<< HEAD
 Any advice or suggestions would mean a lot. Thank you!",2025-04-23 14:46:02,1
 Pet Owner,Hello if you’re a pet owner and want to help out your fellow drexel dragons take this google survey! thanks https://forms.gle/uR6kwYG2LaHUuygS6,2025-04-23 14:45:39,1
 Flea market this Saturday (the decision regarding the rain date will be made on Friday and I will post it then),,2025-04-23 10:41:14,5
@@ -74,11 +96,23 @@ Business Idea Market Research,"I’m an entrepreneurship major who is conducting
 [International Payment App Market Research - Google Forms](https://docs.google.com/forms/d/e/1FAIpQLSf3wc8-5fCFtuJeQVv5tw_xWUAmtD1GXsxM6RH3xuLDeL-ktw/viewform)",2025-04-22 20:01:53,4
 Same old,"Swear the only thing I see in this sub is people complaining about petty Drexel problems. Can y’all tell me the craziest thing you have seen or witnessed at Drexel or in Philly, let’s switch it up a bit.",2025-04-22 19:03:58,24
 Why are the summit staff literally the rudest people on earth?,"Summit had a cute little plant event today. As I was getting my succulents, I noticed that as people left the 2 staff members behind the table would automatically start talking shit about the person who left if they didn’t like them. I’ve noticed this multiple times. 
+=======
+Any advice or suggestions would mean a lot. Thank you!",2025-04-23 14:46:02,1,5,-0.373279170142382,academic,[],7
+1k66ygr,Pet Owner,Hello if you’re a pet owner and want to help out your fellow drexel dragons take this google survey! thanks https://forms.gle/uR6kwYG2LaHUuygS6,2025-04-23 14:45:39,1,0,-0.30866346157479585,academic,[],7
+1k60uzu,Flea market this Saturday (the decision regarding the rain date will be made on Friday and I will post it then),,2025-04-23 10:41:14,5,2,-0.3597710179575786,academic,[],7
+1k5opqa,When is Kurt CS277 Midterm??,He hasn't talked about it and there is nothing on the website. Im a bit worried because I have a couple other midterms next week but I'm very behind in Kurt's class.,2025-04-22 22:44:20,3,4,-0.788586850945324,academic,['midterms'],7
+1k5lif5,Business Idea Market Research,"I’m an entrepreneurship major who is conducting market research for a business idea I have been developing in one of my classes. If anybody could take the time to respond it would be greatly appreciated. It shouldn’t take more than 5 minutes of your time. I’d also be happy to do anybody else’s surveys in return. Thanks!
+
+[International Payment App Market Research - Google Forms](https://docs.google.com/forms/d/e/1FAIpQLSf3wc8-5fCFtuJeQVv5tw_xWUAmtD1GXsxM6RH3xuLDeL-ktw/viewform)",2025-04-22 20:01:53,3,1,-0.4897469826024172,academic,[],7
+1k5kae5,Same old,"Swear the only thing I see in this sub is people complaining about petty Drexel problems. Can y’all tell me the craziest thing you have seen or witnessed at Drexel or in Philly, let’s switch it up a bit.",2025-04-22 19:03:58,24,20,-0.27391625261907815,academic,[],7
+1k5gvuy,Why are the summit staff literally the rudest people on earth?,"Summit had a cute little plant event today. As I was getting my succulents, I noticed that as people left the 2 staff members behind the table would automatically start talking shit about the person who left if they didn’t like them. I’ve noticed this multiple times. 
+>>>>>>> 86f78de98e66d6d029156579cb2aabe84fddcf73
 
 After I was done making my pot, I was literally just looking at the plants to see which one was cool to point out to my roommate (who was sitting on the chairs nearby) and Nicole, one of the staff members behind the table called me out and embarrassed me and basically said I already have 2-3 plants and I should leave some for others, assuming I was going to take another plant for myself. Bro I stg these people are always fkn rude for no reason. That same person literally said like 5 minutes prior to someone else to take as many as they want since they need to do away with the plants. 
 
 This is kind of a rant but also a kind of don’t live here warning. The staff members are literally insufferable. There has been multiple moments leading up to this post. The only nice people for the most part are the security people at the front desk and the maintenance staff, but the people from the leasing office literally don’t know what customer service is. I pay all this money to live in Drexel’s dumbass 2 year required property. The least you could do is put a fucking smile on your face and not treat your residents like shit. 
 
+<<<<<<< HEAD
 Sincerely a disgruntled summit resident who regrets signing their lease and wasting $1300 a month on a shabby apartment. ",2025-04-22 16:37:51,80
 Why should I choose Drexel?,"The two schools I'm deciding between are Villanova and Drexel for engineering, and I'm planning to go into civil engineering. I'm excited about Drexel's co-op opportunities, but I'm also very indecisive. I just want to hear why you all chose Drexel as I work on making my decision.",2025-04-22 15:22:47,10
 Accounting and MIS double major,Hi is this double major possible and has anyone done this before in Drexel? Was it very difficult and how was landing co-ops,2025-04-22 15:21:22,2
@@ -92,6 +126,21 @@ How to get a co op as MIS Major,"I’m currently a senior in HS and I have commi
 What can I do right now to prepare for a good CV to ensure I land a co op? I’m worried about not landing a co op as I’ve heard some horror stories",2025-04-21 23:28:21,10
 Who’s hiring?,Loooking for summer job. ,2025-04-21 23:22:15,1
 Mats for sale!!,"Hi everyone, I’m selling my floor mats for a total of $35.
+=======
+Sincerely a disgruntled summit resident who regrets signing their lease and wasting $1300 a month on a shabby apartment. ",2025-04-22 16:37:51,80,14,-0.18551173858225,housing,['roommate'],7
+1k5f169,Why should I choose Drexel?,"The two schools I'm deciding between are Villanova and Drexel for engineering, and I'm planning to go into civil engineering. I'm excited about Drexel's co-op opportunities, but I'm also very indecisive. I just want to hear why you all chose Drexel as I work on making my decision.",2025-04-22 15:22:47,10,14,0.04298644827640552,academic,"['bet', 'co-op']",7
+1k5ezwz,Accounting and MIS double major,Hi is this double major possible and has anyone done this before in Drexel? Was it very difficult and how was landing co-ops,2025-04-22 15:21:22,2,2,-0.9392887239306289,academic,['co-op'],7
+1k5bjtr,Jury duty excuse letter,i was recently summoned for jury duty and was wondering if anyone knows who i could contact for getting an excuse letter for to being a full time student? ,2025-04-22 13:04:56,4,11,-0.3428474413182162,academic,[],7
+1k5b7m5,Drexel Nursing HSCI103 Exam Help,"Hello guys. I'm a first year nursing major and I was wondering if there are any tips from those who have previously taken HSCI103 exams if y'all have any exam study guides or anything that could help me get through them, since Dr. Flynn doesn't provide my class with any resources. Thanks",2025-04-22 12:51:17,2,1,-0.08373913167454539,academic,"['study', 'exam']",7
+1k5akn9,Where can I find roomates for next year?,"I want an apartment in the Mantua/drexel park area, is there anything people use to find roomates?",2025-04-22 12:25:31,3,1,0.2801113031415252,academic,[],7
+1k59oxy,Chem 103 w Rutkowsky,"Does anyone know if Rutkowsky exams are hard? I have exam 1 on Thursday and I’m cooked since I have been only studying for math. I have today and tmrw to study. Please let me know any tips that helped u prepare for the exam if u took the course before or currently taking it. Don’t even comment things like “u should’ve studied”, “this class is easy”. Keep it to urself!",2025-04-22 11:50:04,5,8,-0.38776645332316806,academic,"['study', 'exam', 'math']",7
+1k4zr1b,"My phone isn’t connecting to dragonfly3, it’s not even giving me the option to",,2025-04-22 02:36:24,2,1,-0.7798331774657232,academic,[],7
+1k4wp90,How to get a co op as MIS Major,"I’m currently a senior in HS and I have committed to Drexel as a MIS major. 
+
+What can I do right now to prepare for a good CV to ensure I land a co op? I’m worried about not landing a co op as I’ve heard some horror stories",2025-04-21 23:28:21,10,1,0.17526669703125886,academic,[],7
+1k4wl59,Who’s hiring?,Loooking for summer job. ,2025-04-21 23:22:15,1,6,-0.03958509660002507,academic,[],7
+1k4qmjf,Mats for sale!!,"Hi everyone, I’m selling my floor mats for a total of $35.
+>>>>>>> 86f78de98e66d6d029156579cb2aabe84fddcf73
 
 1) I got these in early 2024. 
 2) They’re in great condition. 
@@ -104,9 +153,10 @@ If you’re serious about buying them, text me.
 
 I live close to Drexel, so if you’re near by I could have them delivered. 
 
-",2025-04-21 18:29:34,1
-Drexel life,"What is your biggest problem studying at Drexel, and what other problems are you guys worried about? Give me two weeks, and I will bring results. I need them for research purposes. 
+",2025-04-21 18:29:34,1,1,-0.3899244398777926,academic,[],7
+1k4ot5g,Drexel life,"What is your biggest problem studying at Drexel, and what other problems are you guys worried about? Give me two weeks, and I will bring results. I need them for research purposes. 
 
+<<<<<<< HEAD
 It can be any problem related to anything in your daily life. The winner gets one dollar ;)",2025-04-21 17:12:19,7
 When to expect enrollment confirmation?,i confirmed my enrolment today and paid the deposit also but when i check my portal it still shows me the option to confirm+pay and i got an email from the college telling me to confirm so im wondering how long this process should take? i just assumed it was automatic and i want to make sure nothing went wrong..,2025-04-21 14:25:53,3
 Gen Ed,"What are the easiest gen ed. I mean absolutely low effort needed to get an A…don’t care if it is boring as long as it isn’t time consuming 
@@ -116,6 +166,17 @@ Selling Things PT 2,"Realized i should’ve just made one big post…that’s my
 
 please reach out and we can talk prices on everything! ",2025-04-21 14:13:25,2
 Selling things!!,"Hi i’m selling a bunch of random stuff so if anyone would like to buy/take please message me!! Im willing to negotiate everything :) 
+=======
+It can be any problem related to anything in your daily life. The winner gets one dollar ;)",2025-04-21 17:12:19,5,2,-0.977101505265244,academic,['study'],7
+1k4kokk,When to expect enrollment confirmation?,i confirmed my enrolment today and paid the deposit also but when i check my portal it still shows me the option to confirm+pay and i got an email from the college telling me to confirm so im wondering how long this process should take? i just assumed it was automatic and i want to make sure nothing went wrong..,2025-04-21 14:25:53,3,1,-0.4257754310217916,academic,[],7
+1k4khaz,Gen Ed,"What are the easiest gen ed. I mean absolutely low effort needed to get an A…don’t care if it is boring as long as it isn’t time consuming 
+
+Thx :)",2025-04-21 14:17:50,5,6,-0.7741365395008222,academic,[],7
+1k4kd8f,Selling Things PT 2,"Realized i should’ve just made one big post…that’s my bad everything again is negotiable and im selling for cheap cause i need it gone. My pictures were taken on a whim since im moving but ofc everything will be deep cleaned before sold/given 
+
+please reach out and we can talk prices on everything! ",2025-04-21 14:13:25,2,1,-0.8803188903640906,academic,[],7
+1k4iq67,Selling things!!,"Hi i’m selling a bunch of random stuff so if anyone would like to buy/take please message me!! Im willing to negotiate everything :) 
+>>>>>>> 86f78de98e66d6d029156579cb2aabe84fddcf73
 
 stuffed animals: 5 each or 15 all of them 
 
@@ -131,12 +192,18 @@ this is urgent so please reach out!
 
 
 
+<<<<<<< HEAD
 ",2025-04-21 13:09:33,21
 GPA,"I saw that the conditions of admission mention that the offer can be withdrawn if there’s a significant drop in final grades. When I submitted my application, my GPA was 4.5 out of 5. This quarter, I’ve gotten a few more 4s, so it might drop a bit.
+=======
+",2025-04-21 13:09:33,21,10,0.19643469851519146,academic,[],7
+1k4ht67,GPA,"I saw that the conditions of admission mention that the offer can be withdrawn if there’s a significant drop in final grades. When I submitted my application, my GPA was 4.5 out of 5. This quarter, I’ve gotten a few more 4s, so it might drop a bit.
+>>>>>>> 86f78de98e66d6d029156579cb2aabe84fddcf73
 
-What exactly counts as a “significant” drop? For example, would a drop to around 4.1 - 4.2 still be acceptable?",2025-04-21 12:34:09,2
-Does Drexel actually provide accommodations or do they just say they do?,"I've applied for accommodations and got accepted but my teachers aren't allowed to give me any and I need to go over multiple contacts to do it which don't work. 
+What exactly counts as a “significant” drop? For example, would a drop to around 4.1 - 4.2 still be acceptable?",2025-04-21 12:34:09,2,7,0.19888043375519993,academic,['exam'],7
+1k4g7ac,Does Drexel actually provide accommodations or do they just say they do?,"I've applied for accommodations and got accepted but my teachers aren't allowed to give me any and I need to go over multiple contacts to do it which don't work. 
 
+<<<<<<< HEAD
 Are there actual accommodations or was that just a lie? Cause it feels like they don't provide any and instead just lie and claim that there are. ",2025-04-21 11:22:21,17
 Veterans on Post 9/11 GI Bill,"Fellow vets, I’ve been readmitted to Drexel after a few years and seem to remember somehow getting a grant or surplus in addition to the GI Bill benefits. It was a decent amount dropped in my bank account every term. Is this still in effect? It looks like the grant I was offered is much less than what it was a few years ago. 
 
@@ -148,6 +215,19 @@ ACE Fall 2025 Facebook Group,I just created a FB group so our cohort can get con
 Drexel Flea Market this coming weekend 4/26 (rain date: 4/27),,2025-04-20 18:34:05,11
 Anyone willing to sell their CCI cap and gown?? Please dm,,2025-04-20 17:13:44,2
 Class scheduling is pain. I fixed it.,"I am a computer science student (not sure if I am getting a job in this market, so I decided to use my degree for something) and I hate finding classes and creating my schedules, so I created a tool to help with it.
+=======
+Are there actual accommodations or was that just a lie? Cause it feels like they don't provide any and instead just lie and claim that there are. ",2025-04-21 11:22:21,15,11,0.28212345000084094,academic,[],7
+1k4g0ah,Veterans on Post 9/11 GI Bill,"Fellow vets, I’ve been readmitted to Drexel after a few years and seem to remember somehow getting a grant or surplus in addition to the GI Bill benefits. It was a decent amount dropped in my bank account every term. Is this still in effect? It looks like the grant I was offered is much less than what it was a few years ago. 
+
+Shoot me a message to discuss the specifics, thanks! ",2025-04-21 11:14:27,3,1,0.0595396423554162,academic,[],7
+1k4a7uu,Drexel vs SUNY Buffalo?,I'm an international student got admit from both the unis for MS in Data Science. I really couldn't determine the right fit for me. Drexel is super expensive CoA ($86k) per year. SUNY Buffalo is affordable ($53k) CoA per year. Drexel has it's own advantage like co-op and makes the networking opportunities better. But buffalo is like nowhere and don't know how I'm gonna search for internship and full-time. I spoke to a bunch of folks at CCI and they are telling that co-op is not guaranteed and since 2022 the percentage of students getting a co-op is declining. I've also heard that only 30% students get a co-op and it's even very hard to get one as an international student. Any one plz let me know how legit is this....Also plz do suggest me a good opinion either Drexel worth to spend or to go with SUNY Buffalo.,2025-04-21 06:26:35,4,15,-0.31208422395639024,academic,"['bet', 'afford', 'co-op']",7
+1k48uq4,Comp sci major,"Hi, i am considering going to drexel for comp sci but I was wondering what current or previous cs majors at drexel think. Would you guys say that cs at drexel is good and do you guys think drexels co-op program is good for cs? And overall do you guys like drexel? ",2025-04-21 04:51:59,4,1,-0.5207227824780856,academic,['co-op'],7
+1k48ph7,Decision help IIT vs Drexel,"I can’t decide whether to pick between Drexel or Illinois tech for B.arch, I do favor Philadelphia more, but Drexel is a little more on price  ",2025-04-21 04:41:33,1,2,-0.6850852062491222,social,['bet'],7
+1k3ym42,ACE Fall 2025 Facebook Group,I just created a FB group so our cohort can get connected! Feel free to join.,2025-04-20 18:45:35,1,0,-0.8354894779729831,academic,[],6
+1k3ydqf,Drexel Flea Market this coming weekend 4/26 (rain date: 4/27),,2025-04-20 18:34:05,10,0,-0.9024037500039898,academic,[],6
+1k3wouq,Anyone willing to sell their CCI cap and gown?? Please dm,,2025-04-20 17:13:44,2,1,0.2065981739284677,academic,[],6
+1k3uldi,Class scheduling is pain. I fixed it.,"I am a computer science student (not sure if I am getting a job in this market, so I decided to use my degree for something) and I hate finding classes and creating my schedules, so I created a tool to help with it.
+>>>>>>> 86f78de98e66d6d029156579cb2aabe84fddcf73
 
 [UCron @ Drexel](https://www.ucron.net/university/drexel-university/explore?term_code=202445) \- Page to search for courses
 
@@ -161,6 +241,7 @@ It's a website that helps you discover new, interesting courses that would other
 * **Track your completed courses, credits, and GPA** with the Course History
 * *Coming Soon:* **Schedule generation with preferences**
 
+<<<<<<< HEAD
 It’s still a work in progress, so drop your feedback in the comments and let me know if there’s anything else you’d like to see added!",2025-04-20 15:35:13,102
 Co-op,"Hello,
 
@@ -613,3 +694,12 @@ How do I submit a private scholarship?,"I got a scholarship and none of the webs
 BSMS Regalia,"Does anyone know what regalia we get as BSMS students? No one told us what to get and we are all buying the masters one.
 
 Wasn't sure who to ask",2025-03-27 17:51:56,3
+=======
+It’s still a work in progress, so drop your feedback in the comments and let me know if there’s anything else you’d like to see added!",2025-04-20 15:35:13,102,8,-0.8557719060507927,academic,[],6
+1k3t6oc,Co-op,"Hello,
+
+I was recently accepted to Drexel University for the Computer Science program and wanted to clarify a matter regarding the co-op program. I did not indicate my interest in participating in the co-op program when filling out the Common App, but I have already reached out through inquiry form submission, and email about this issue. I’m concerned that this might affect my opportunity to join the program.
+
+What are the chances that I can still make changes and participate in the co-op program moving forward?",2025-04-20 14:30:44,3,4,-0.8838159021468815,academic,['co-op'],6
+1k3nsn5,What type of messaging app do you guys use in America?,"I just committed to drexel, (Thanks for the advice on my last post, It helped a lot) and I am looking to connect to some first yrs coming this fall as well, and I was just wondering what is the norms of communication in America, I use Telegram mainly in my country so I was just wondering what it is over there. ",2025-04-20 10:30:08,7,12,-0.994919017090005,academic,[],6
+>>>>>>> 86f78de98e66d6d029156579cb2aabe84fddcf73

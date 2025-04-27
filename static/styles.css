@@ -1,0 +1,165 @@
+body {
+    background: linear-gradient(#6B7280, #4B5563);
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .header {
+    background: #1F2937;
+    color: #D1D5DB;
+    padding: 1rem;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    box-shadow: 0 0 10px #9333EA;
+    z-index: 10;
+  }
+  
+  .logo {
+    font-size: 1.5rem;
+    font-weight: bold;
+    text-shadow: 0 0 5px #9333EA;
+  }
+  
+  .nav-link {
+    margin-right: 1rem;
+    color: #D1D5DB;
+  }
+  
+  .nav-link:hover {
+    color: #9333EA;
+  }
+  
+  .week-selector {
+    display: flex;
+    align-items: center;
+  }
+  
+  .tabs {
+    display: flex;
+    flex-wrap: wrap;
+    background: #1F2937;
+    border-bottom: 1px solid #4B5563;
+  }
+  
+  .tab {
+    padding: 1rem;
+    color: #D1D5DB;
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+  
+  .tab.active {
+    border-bottom: 2px solid #9333EA;
+    color: #9333EA;
+  }
+  
+  .tab:hover {
+    background: #374151;
+  }
+  
+  .tab-content {
+    display: none;
+  }
+  
+  .tab-content.active {
+    display: block;
+  }
+  
+  .panel {
+    background: #1F2937;
+    padding: 1rem;
+    border-radius: 0.5rem;
+    border: 1px solid #9333EA;
+    box-shadow: 0 0 5px #9333EA;
+  }
+  
+  .panel-title {
+    font-size: 1.25rem;
+    font-weight: bold;
+    color: #D1D5DB;
+    text-shadow: 0 0 5px #9333EA;
+  }
+  
+  .pulse-critical {
+    animation: pulse 1.5s infinite;
+  }
+  
+  @keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+  }
+  
+  .status, .trend, .recommendation {
+    font-size: 0.875rem;
+  }
+  
+  .neon-glow {
+    text-shadow: 0 0 5px #9333EA;
+  }
+  
+  .action-input {
+    width: 100%;
+    padding: 0.5rem;
+    background: #374151;
+    color: #D1D5DB;
+    border-radius: 0.25rem;
+    border: 1px solid #4B5563;
+  }
+  
+  .action-button {
+    width: 100%;
+    padding: 0.5rem;
+    background: #9333EA;
+    color: #FFFFFF;
+    border-radius: 0.25rem;
+    margin-top: 0.5rem;
+  }
+  
+  .action-button:hover {
+    background: #A855F7;
+  }
+  
+  .keyword-cloud {
+    position: relative;
+    height: 12rem;
+  }
+  
+  .keyword {
+    position: absolute;
+    transition: all 0.3s;
+  }
+  
+  .keyword:hover {
+    transform: scale(1.2);
+  }
+  
+  .keyword-tooltip {
+    position: absolute;
+    background: #374151;
+    color: #D1D5DB;
+    padding: 0.5rem;
+    border-radius: 0.25rem;
+    font-size: 0.75rem;
+    display: none;
+    z-index: 20;
+  }
+  
+  .keyword:hover .keyword-tooltip {
+    display: block;
+  }
+  
+  .footer {
+    background: #1F2937;
+    color: #D1D5DB;
+    padding: 1rem;
+    margin-top: 1rem;
+    box-shadow: 0 0 10px #9333EA;
+  }
+  
+  @media (max-width: 768px) {
+    .tabs { flex-direction: column; }
+    .tab-content { padding: 0.5rem; }
+    .grid { grid-template-columns: 1fr; }
+    .tab { font-size: 0.9rem; padding: 0.5rem; }
+    .week-selector select { width: 100%; }
+  }

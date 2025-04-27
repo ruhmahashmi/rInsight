@@ -14,22 +14,22 @@ def predict_crash(input_csv="data/analyzed_posts.csv", output_csv="data/crash_pr
         # Group by year and week, calculate average sentiment and issue counts
         grouped = df.groupby(["year", "week"]).agg({
             "sentiment": "mean",
-            "issues": lambda x: sum("'mental_health'" in str(i) for i in x),  # Count mental_health issues
-            "title": "count"  # Count posts per week
+            "issues": lambda x: sum("'mental_health'" in str(i) for i in x),
+            "title": "count"
         }).rename(columns={"issues": "mental_health_count", "title": "post_count"}).reset_index()
         
-        # Define crash periods (low sentiment and high mental health issues)
+        # Define crash periods
         grouped["crash_period"] = (grouped["sentiment"] < -0.2) & (grouped["mental_health_count"] >= 2)
         
         # Drexel's 2024-2025 academic calendar
         calendar = {
             (2024, 41): "Co-op Deadlines (Fall)",
-            (2024, 49): "Finals (Fall)",
+            (2024, 50): "Finals (Fall)",  # Updated from 49
             (2025, 10): "Co-op Deadlines (Winter)",
             (2025, 24): "Finals (Spring)"
         }
         
-        # Map calendar events to weeks
+        # Map calendar events
         grouped["event"] = grouped.apply(
             lambda row: calendar.get((row["year"], row["week"]), ""), axis=1
         )

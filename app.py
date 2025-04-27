@@ -11,65 +11,26 @@ import time
 app = Flask(__name__)
 CORS(app)
 
-# Setup logging for debugging
 logging.basicConfig(level=logging.DEBUG)
 logger = logging.getLogger(__name__)
 
-# Cache file for Reddit data
 CACHE_FILE = "data/drexel_cache.pkl"
-CACHE_DURATION = 3600  # Cache for 1 hour
+CACHE_DURATION = 3600
 
-# Mock Data (expanded for all categories)
-mock_posts = [
-    {
-        'id': 'p1', 'title': 'Crashing out for math finals', 'text': 'No prep, I’m cooked for MATH 101', 
-        'date': '2025-04-20 10:00:00', 'upvotes': 15, 'comments': 8, 'sentiment': -0.8, 
-        'category': 'academic', 'keywords': ['crashing out', 'no prep', 'math'], 'week': 4
-    },
-    {
-        'id': 'p2', 'title': 'Locking in but stressed', 'text': 'Midterms got me acting unwise', 
-        'date': '2025-04-19 15:30:00', 'upvotes': 10, 'comments': 5, 'sentiment': -0.7, 
-        'category': 'academic', 'keywords': ['locking in', 'midterms'], 'week': 4
-    },
-    {
-        'id': 'p3', 'title': 'Broke af, tuition due', 'text': 'Can’t afford textbooks', 
-        'date': '2025-04-18 09:00:00', 'upvotes': 12, 'comments': 3, 'sentiment': -0.9, 
-        'category': 'financial', 'keywords': ['broke af', 'tuition'], 'week': 4
-    },
-    {
-        'id': 'p4', 'title': 'Brain fog is killing me', 'text': 'Can’t focus, need help', 
-        'date': '2025-04-17 12:00:00', 'upvotes': 8, 'comments': 4, 'sentiment': -0.85, 
-        'category': 'health', 'keywords': ['brain fog', 'focus'], 'week': 4
-    },
-    {
-        'id': 'p5', 'title': 'Roommate vibes off', 'text': 'Dorm life is rough', 
-        'date': '2025-04-16 14:00:00', 'upvotes': 9, 'comments': 2, 'sentiment': -0.75, 
-        'category': 'housing', 'keywords': ['vibes off', 'roommate'], 'week': 4
-    },
-    {
-        'id': 'p6', 'title': 'Bet, joined a club', 'text': 'DragonLink is chill', 
-        'date': '2025-04-15 11:00:00', 'upvotes': 14, 'comments': 6, 'sentiment': 0.2, 
-        'category': 'social', 'keywords': ['bet', 'DragonLink'], 'week': 4
-    },
-    {
-        'id': 'p7', 'title': 'Housing at API is trash', 'text': 'Elevators broken again', 
-        'date': '2025-04-14 10:00:00', 'upvotes': 20, 'comments': 10, 'sentiment': -0.9, 
-        'category': 'housing', 'keywords': ['housing', 'API'], 'week': 4
-    },
-    {
-        'id': 'p8', 'title': 'Co-op interviews stressing me out', 'text': 'No idea how to prep', 
-        'date': '2025-04-13 16:00:00', 'upvotes': 18, 'comments': 7, 'sentiment': -0.8, 
-        'category': 'academic', 'keywords': ['co-op', 'stress'], 'week': 4
-    }
-]
+# Load crash predictions
+def load_crash_predictions():
+    try:
+        df = pd.read_csv("data/crash_predictions.csv")
+        return df.to_dict('records')
+    except Exception as e:
+        logger.error(f"Error loading crash predictions: {e}")
+        return []
 
-# Serve index.html at root
 @app.route('/')
 def serve_index():
     logger.debug("Serving index.html")
     return send_from_directory('.', 'index.html')
 
-# Serve static files (styles.css, script.js)
 @app.route('/<path:path>')
 def serve_static(path):
     logger.debug(f"Serving static file: {path}")
@@ -99,16 +60,15 @@ def stress_scores(week):
     posts = load_cached_data()
     if posts is None:
         try:
-            df = scrape_drexel(limit=50)  # Fetch live r/Drexel posts
+            df = scrape_drexel(limit=50)
             if df.empty:
-                logger.warning("No posts fetched from r/Drexel, using mock data")
-                posts = mock_posts
-            else:
-                posts = df.to_dict('records')
-                save_cached_data(posts)
+                logger.warning("No posts fetched from r/Drexel")
+                return jsonify({'error': 'No posts available'}), 500
+            posts = df.to_dict('records')
+            save_cached_data(posts)
         except Exception as e:
             logger.error(f"Error fetching Reddit data: {e}")
-            posts = mock_posts
+            return jsonify({'error': str(e)}), 500
     
     if week != 'all':
         posts = [p for p in posts if p['week'] == int(week)]
@@ -116,10 +76,10 @@ def stress_scores(week):
     scores = {'academic': [], 'financial': [], 'health': [], 'housing': [], 'social': []}
     for post in posts:
         score = (0.35 * post['sentiment'] + 
-                 0.25 * (len(post['keywords']) / 5) + 
-                 0.2 * (1.2 if post['week'] in [4, 8] else 0.5) + 
-                 0.2 * (post['upvotes'] / 50)) * 100
-        score = max(0, min(100, 100 - score))  # Invert: lower = higher stress
+                0.25 * (len(post['keywords']) / 5) + 
+                0.2 * (1.2 if post['week'] in [41, 50, 10, 24] else 0.5) + 
+                0.2 * (post['upvotes'] / 50)) * 100
+        score = max(0, min(100, 100 - score))
         scores[post['category']].append(score)
     
     result = {}
@@ -142,7 +102,7 @@ def stress_scores(week):
                 'status': status,
                 'color': color,
                 'recommendation': recommendation,
-                'trend_labels': ['Week 1', 'Week 2', 'Week 3', 'Week 4'],
+                'trend_labels': ['Week 1', 'Week 2', 'Week 3', f"Week {week}"],
                 'trend_data': [60, 55, 50, avg_score]
             }
     result['summary'] = f"Week {week} stress: {'High' if any(s < 50 for s in [r.get('score', 100) for r in result.values()]) else 'Moderate'}"
@@ -155,16 +115,15 @@ def keywords(week):
     posts = load_cached_data()
     if posts is None:
         try:
-            df = scrape_drexel(limit=50)  # Fetch live r/Drexel posts
+            df = scrape_drexel(limit=50)
             if df.empty:
-                logger.warning("No posts fetched from r/Drexel, using mock data")
-                posts = mock_posts
-            else:
-                posts = df.to_dict('records')
-                save_cached_data(posts)
+                logger.warning("No posts fetched from r/Drexel")
+                return jsonify({'error': 'No posts available'}), 500
+            posts = df.to_dict('records')
+            save_cached_data(posts)
         except Exception as e:
             logger.error(f"Error fetching Reddit data: {e}")
-            posts = mock_posts
+            return jsonify({'error': str(e)}), 500
     
     if week != 'all':
         posts = [p for p in posts if p['week'] == int(week)]
@@ -189,43 +148,23 @@ def keywords(week):
 @app.route('/api/recommendations/<week>')
 def recommendations(week):
     logger.debug(f"Fetching recommendations for week: {week}")
-    posts = load_cached_data()
-    if posts is None:
-        try:
-            df = scrape_drexel(limit=50)  # Fetch live r/Drexel posts
-            if df.empty:
-                logger.warning("No posts fetched from r/Drexel, using mock data")
-                posts = mock_posts
-            else:
-                posts = df.to_dict('records')
-                save_cached_data(posts)
-        except Exception as e:
-            logger.error(f"Error fetching Reddit data: {e}")
-            posts = mock_posts
-    
+    crash_predictions = load_crash_predictions()
+    if not crash_predictions:
+        logger.warning("No crash predictions available")
+        return jsonify([])
+
     if week != 'all':
-        posts = [p for p in posts if p['week'] == int(week)]
+        crash_predictions = [p for p in crash_predictions if p['week'] == int(week)]
     
-    keyword_recs = {
-        'crashing out': 'Promote Math Resource Center (MRC) for math exam Deutsche',
-        'locking in': 'Host Week 4 study session with Academic Resource Center (ARC)',
-        'broke af': 'Link to Student Financial Services for tuition concerns',
-        'bet': 'Promote DragonLink for social engagement',
-        'brain fog': 'Offer Counseling Center drop-ins for mental health',
-        'vibes off': 'Refer to Resident Life for roommate mediation',
-        'housing': 'Refer to Resident Life for housing issues',
-        'co-op': 'Promote Steinbright Career Center for co-op prep',
-        'no prep': 'Promote Quizlet and peer tutoring for exam prep'
-    }
     result = [
         {
-            'keyword': kw,
-            'suggestion': keyword_recs.get(kw, 'General wellness support'),
-            'week': week if week != 'all' else 'all'
+            'keyword': 'mental_health' if p['mental_health_count'] >= 2 else p['event'].lower().replace(' ', '_'),
+            'suggestion': p['recommendation'],
+            'week': str(p['week'])
         }
-        for post in posts for kw in post['keywords'] if kw in keyword_recs
+        for p in crash_predictions if p['recommendation']
     ]
-    return jsonify(list({v['keyword']: v for v in result}.values()))
+    return jsonify(result)
 
 if __name__ == '__main__':
     logger.info("Starting Flask server on port 5000")

@@ -3,42 +3,35 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>rInsight - Campus Mental Health Analytics</title>
+  <title>rInsight - Drexel Mental Health Analytics</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
-  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-  <style>
-    body { background: linear-gradient(#6B7280, #4B5563); }
-    .tabs { display: flex; flex-wrap: wrap; background: #1F2937; }
-    .tab { padding: 1rem; color: #D1D5DB; cursor: pointer; transition: all 0.3s; }
-    .tab.active { border-bottom: 2px solid #9333EA; color: #9333EA; }
-    .tab:hover { background: #374151; }
-    .gauge { transition: transform 0.3s; }
-    .pulse-critical { animation: pulse 1.5s infinite; }
-    @keyframes pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.1); } }
-    .keyword-cloud { position: relative; height: 200px; }
-    .keyword { position: absolute; transition: all 0.3s; }
-    .keyword:hover { transform: scale(1.2); }
-    .neon-glow { text-shadow: 0 0 5px #9333EA; }
-    .tab-content { display: none; }
-    .tab-content.active { display: block; }
-    @media (max-width: 768px) { .tabs { flex-direction: column; } .tab-content { padding: 0.5rem; } }
-  </style>
+  <link rel="stylesheet" href="static/styles.css">
 </head>
 <body class="text-gray-200">
   <!-- Header -->
-  <header class="bg-purple-800 text-purple-300 p-4 fixed w-full top-0 shadow-md" style="box-shadow: 0 0 10px #9333EA;">
+  <header class="header">
     <div class="container mx-auto flex justify-between items-center">
-      <h1 class="text-2xl font-bold neon-glow">rInsight</h1>
+      <h1 class="logo">rInsight</h1>
       <nav>
-        <a href="#" class="mr-4 hover:text-purple-400">Home</a>
-        <a href="#" class="hover:text-purple-400">Logout</a>
+        <a href="#" class="nav-link">Home</a>
+        <a href="#" class="nav-link">Logout</a>
       </nav>
     </div>
   </header>
 
   <!-- Main Content -->
   <main class="container mx-auto mt-20 p-4">
+    <!-- Week Selector -->
+    <div class="week-selector mb-4">
+      <label for="week-select" class="text-purple-300 neon-glow mr-2">Select Week:</label>
+      <select id="week-select" class="bg-gray-800 text-gray-200 p-2 rounded">
+        <option value="4">Week 4 (Midterms)</option>
+        <option value="8">Week 8 (Finals)</option>
+        <option value="all">All Weeks</option>
+      </select>
+    </div>
+
     <!-- Tab Navigation -->
     <div class="tabs">
       <div class="tab active" data-tab="academic"><i class="fas fa-book mr-2"></i>Academic</div>
@@ -48,151 +41,170 @@
       <div class="tab" data-tab="social"><i class="fas fa-users mr-2"></i>Social</div>
       <div class="tab" data-tab="all"><i class="fas fa-globe mr-2"></i>All Categories</div>
       <div class="tab" data-tab="keywords"><i class="fas fa-star mr-2"></i>Keyword Insights</div>
+      <div class="tab" data-tab="resources"><i class="fas fa-link mr-2"></i>Resources</div>
     </div>
 
     <!-- Tab Contents -->
     <!-- Academic Tab -->
     <div class="tab-content active" id="academic">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-        <div class="bg-purple-900 p-4 rounded-lg shadow-md border border-purple-300 pulse-critical">
-          <h3 class="text-lg font-bold text-purple-300 neon-glow">Academic Stress Score</h3>
+        <div class="panel pulse-critical">
+          <h3 class="panel-title">Academic Stress Score</h3>
           <canvas id="academic-gauge" height="150"></canvas>
-          <p class="text-red-400 text-center mt-2">Critical: Score 44</p>
-          <p class="text-gray-400 mt-2">Trend: +25% stress this week</p>
-          <p class="text-sm text-gray-300 mt-2 neon-glow">Recommendation: Host finals prep workshop</p>
+          <p class="status text-red-400 text-center mt-2">Critical: Score <span id="academic-score">0</span></p>
+          <p class="trend text-gray-400 mt-2" id="academic-trend-text">Trend: Loading...</p>
+          <p class="recommendation text-sm text-gray-300 mt-2 neon-glow" id="academic-recommendation">Recommendation: Loading...</p>
         </div>
-        <div class="bg-purple-900 p-4 rounded-lg shadow-md border border-purple-300">
-          <h3 class="text-lg font-bold text-purple-300 neon-glow">Weekly Trend</h3>
+        <div class="panel">
+          <h3 class="panel-title">Weekly Trend</h3>
           <canvas id="academic-trend" height="150"></canvas>
-          <form class="mt-4">
-            <input type="text" id="academic-action" class="w-full p-2 bg-gray-800 text-gray-200 rounded" placeholder="Log an action..." required>
-            <button type="submit" class="mt-2 w-full bg-purple-500 text-white p-2 rounded hover:bg-purple-600">Log Action</button>
+          <form class="mt-4" id="academic-form">
+            <input type="text" id="academic-action" class="action-input" placeholder="Log an action (e.g., Scheduled MRC workshop)" required>
+            <button type="submit" class="action-button">Log Action</button>
           </form>
+          <ul id="academic-actions" class="text-gray-400 mt-2"></ul>
         </div>
       </div>
     </div>
-    <!-- Financial, Health, Housing, Social Tabs (Similar Structure) -->
+    <!-- Financial Tab -->
+    <div class="tab-content" id="financial">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <div class="panel">
+          <h3 class="panel-title">Financial Stress Score</h3>
+          <canvas id="financial-gauge" height="150"></canvas>
+          <p class="status text-yellow-400 text-center mt-2">Moderate: Score <span id="financial-score">0</span></p>
+          <p class="trend text-gray-400 mt-2" id="financial-trend-text">Trend: Loading...</p>
+          <p class="recommendation text-sm text-gray-300 mt-2 neon-glow" id="financial-recommendation">Recommendation: Loading...</p>
+        </div>
+        <div class="panel">
+          <h3 class="panel-title">Weekly Trend</h3>
+          <canvas id="financial-trend" height="150"></canvas>
+          <form class="mt-4" id="financial-form">
+            <input type="text" id="financial-action" class="action-input" placeholder="Log an action..." required>
+            <button type="submit" class="action-button">Log Action</button>
+          </form>
+          <ul id="financial-actions" class="text-gray-400 mt-2"></ul>
+        </div>
+      </div>
+    </div>
+    <!-- Health Tab -->
+    <div class="tab-content" id="health">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <div class="panel">
+          <h3 class="panel-title">Health Stress Score</h3>
+          <canvas id="health-gauge" height="150"></canvas>
+          <p class="status text-yellow-400 text-center mt-2">Moderate: Score <span id="health-score">0</span></p>
+          <p class="trend text-gray-400 mt-2" id="health-trend-text">Trend: Loading...</p>
+          <p class="recommendation text-sm text-gray-300 mt-2 neon-glow" id="health-recommendation">Recommendation: Loading...</p>
+        </div>
+        <div class="panel">
+          <h3 class="panel-title">Weekly Trend</h3>
+          <canvas id="health-trend" height="150"></canvas>
+          <form class="mt-4" id="health-form">
+            <input type="text" id="health-action" class="action-input" placeholder="Log an action..." required>
+            <button type="submit" class="action-button">Log Action</button>
+          </form>
+          <ul id="health-actions" class="text-gray-400 mt-2"></ul>
+        </div>
+      </div>
+    </div>
+    <!-- Housing Tab -->
+    <div class="tab-content" id="housing">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <div class="panel">
+          <h3 class="panel-title">Housing Stress Score</h3>
+          <canvas id="housing-gauge" height="150"></canvas>
+          <p class="status text-yellow-400 text-center mt-2">Moderate: Score <span id="housing-score">0</span></p>
+          <p class="trend text-gray-400 mt-2" id="housing-trend-text">Trend: Loading...</p>
+          <p class="recommendation text-sm text-gray-300 mt-2 neon-glow" id="housing-recommendation">Recommendation: Loading...</p>
+        </div>
+        <div class="panel">
+          <h3 class="panel-title">Weekly Trend</h3>
+          <canvas id="housing-trend" height="150"></canvas>
+          <form class="mt-4" id="housing-form">
+            <input type="text" id="housing-action" class="action-input" placeholder="Log an action..." required>
+            <button type="submit" class="action-button">Log Action</button>
+          </form>
+          <ul id="housing-actions" class="text-gray-400 mt-2"></ul>
+        </div>
+      </div>
+    </div>
+    <!-- Social Tab -->
+    <div class="tab-content" id="social">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <div class="panel">
+          <h3 class="panel-title">Social Stress Score</h3>
+          <canvas id="social-gauge" height="150"></canvas>
+          <p class="status text-green-400 text-center mt-2">Low: Score <span id="social-score">0</span></p>
+          <p class="trend text-gray-400 mt-2" id="social-trend-text">Trend: Loading...</p>
+          <p class="recommendation text-sm text-gray-300 mt-2 neon-glow" id="social-recommendation">Recommendation: Loading...</p>
+        </div>
+        <div class="panel">
+          <h3 class="panel-title">Weekly Trend</h3>
+          <canvas id="social-trend" height="150"></canvas>
+          <form class="mt-4" id="social-form">
+            <input type="text" id="social-action" class="action-input" placeholder="Log an action..." required>
+            <button type="submit" class="action-button">Log Action</button>
+          </form>
+          <ul id="social-actions" class="text-gray-400 mt-2"></ul>
+        </div>
+      </div>
+    </div>
     <!-- All Categories Tab -->
     <div class="tab-content" id="all">
-      <div class="bg-purple-900 p-4 rounded-lg shadow-md mt-4 border border-purple-300">
-        <h3 class="text-lg font-bold text-purple-300 neon-glow">All Categories Overview</h3>
+      <div class="panel mt-4">
+        <h3 class="panel-title">All Categories Overview</h3>
         <canvas id="radar-chart" height="200"></canvas>
-        <p class="text-gray-400 mt-2">Summary: Academic stress spiked 25% pre-finals</p>
-        <p class="text-sm text-gray-300 mt-2 neon-glow">Recommendation: Host campus-wide wellness fair</p>
+        <p class="text-gray-400 mt-2" id="all-summary">Summary: Loading...</p>
+        <p class="recommendation text-sm text-gray-300 mt-2 neon-glow" id="all-recommendation">Recommendation: Loading...</p>
       </div>
     </div>
     <!-- Keyword Insights Tab -->
     <div class="tab-content" id="keywords">
       <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
-        <div class="bg-purple-900 p-4 rounded-lg shadow-md border border-purple-300">
-          <h3 class="text-lg font-bold text-purple-300 neon-glow">Keyword Cloud</h3>
-          <div class="keyword-cloud relative h-48">
-            <span class="keyword text-purple-300 neon-glow" style="font-size: 1.5em; left: 20%; top: 30%;">cooked</span>
-            <span class="keyword text-purple-400" style="font-size: 1.2em; left: 50%; top: 50%;">no prep</span>
-            <span class="keyword text-purple-400" style="font-size: 1em; left: 70%; top: 20%;">stress</span>
-          </div>
+        <div class="panel">
+          <h3 class="panel-title">Keyword Cloud</h3>
+          <div class="keyword-cloud relative h-48" id="keyword-cloud"></div>
         </div>
-        <div class="bg-purple-900 p-4 rounded-lg shadow-md border border-purple-300">
-          <h3 class="text-lg font-bold text-purple-300 neon-glow">Recommendations (Gemini)</h3>
-          <ul class="text-gray-300">
-            <li class="py-2 border-b border-gray-700">For “cooked”: Promote Quizlet, peer tutoring <span class="text-purple-400 text-sm neon-glow">Generated by Gemini</span></li>
-            <li class="py-2 border-b border-gray-700">For “no prep”: Host finals prep workshop <span class="text-purple-400 text-sm neon-glow">Generated by Gemini</span></li>
-          </ul>
-          <h4 class="text-md font-semibold text-purple-300 mt-4 neon-glow">Keyword Trends</h4>
-          <table class="w-full text-gray-400 text-sm">
-            <tr class="border-b border-gray-700"><th>Keyword</th><th>Frequency</th><th>Category</th></tr>
-            <tr><td class="neon-glow">cooked</td><td>15</td><td>Academic</td></tr>
-            <tr><td>no prep</td><td>10</td><td>Academic</td></tr>
+        <div class="panel">
+          <h3 class="panel-title">Keyword Trends</h3>
+          <table class="w-full text-gray-400 text-sm" id="keyword-table">
+            <tr class="border-b border-gray-700"><th>Keyword</th><th>Frequency</th><th>Category</th><th>Sample Post</th></tr>
           </table>
+        </div>
+      </div>
+    </div>
+    <!-- Resources Tab -->
+    <div class="tab-content" id="resources">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+        <div class="panel">
+          <h3 class="panel-title">Gemini AI Recommendations</h3>
+          <p class="text-red-400 mb-2 neon-glow pulse-critical" id="resources-alert">Alert: Loading...</p>
+          <ul class="text-gray-300" id="gemini-recommendations"></ul>
+        </div>
+        <div class="panel">
+          <h3 class="panel-title">Drexel Resources</h3>
+          <ul class="text-purple-400">
+            <li class="py-2"><a href="https://drexel.edu/academics/resources/math-resource-center" class="hover:underline">Math Resource Center (MRC)</a></li>
+            <li class="py-2"><a href="https://drexel.edu/academics/resources/academic-resource-center" class="hover:underline">Academic Resource Center (ARC)</a></li>
+            <li class="py-2"><a href="https://drexel.edu/counselingandhealth/counseling-center" class="hover:underline">Counseling Center</a></li>
+            <li class="py-2"><a href="https://drexel.edu/studentlife/financial-services" class="hover:underline">Student Financial Services</a></li>
+            <li class="py-2"><a href="https://drexel.edu/studentlife/resident-life" class="hover:underline">Resident Life</a></li>
+            <li class="py-2"><a href="https://dragonlink.drexel.edu" class="hover:underline">DragonLink (Clubs)</a></li>
+          </ul>
         </div>
       </div>
     </div>
   </main>
 
   <!-- Footer -->
-  <footer class="bg-purple-800 text-purple-300 p-4 mt-4" style="box-shadow: 0 0 10px #9333EA;">
+  <footer class="footer">
     <div class="container mx-auto text-center">
-      <p>© 2025 rInsight. Contact: support@rinsight.com | Powered by <span class="neon-glow">Gemini</span></p>
+      <p>© 2025 rInsight. Contact: support@rinsight.com | Powered by <span class="neon-glow">Reddit & Gemini</span></p>
     </div>
   </footer>
 
-  <script>
-    // Tab Switching
-    document.querySelectorAll('.tab').forEach(tab => {
-      tab.addEventListener('click', () => {
-        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
-        tab.classList.add('active');
-        document.getElementById(tab.dataset.tab).classList.add('active');
-      });
-    });
-
-    // Mock API call to Flask
-    async function fetchStressScores() {
-      return {
-        academic: { score: 44, trend: "+25%", status: "Critical" },
-        financial: { score: 50, trend: "+15%", status: "Moderate" },
-        health: { score: 70, trend: "Stable", status: "Low" },
-        housing: { score: 60, trend: "+10%", status: "Moderate" },
-        social: { score: 55, trend: "+12%", status: "Moderate" }
-      };
-    }
-
-    // Academic Gauge
-    const academicGauge = document.getElementById('academic-gauge').getContext('2d');
-    function drawGauge(ctx, score, color) {
-      ctx.beginPath();
-      ctx.arc(75, 75, 60, 0, 2 * Math.PI);
-      ctx.strokeStyle = '#4B5563';
-      ctx.lineWidth = 10;
-      ctx.stroke();
-      ctx.beginPath();
-      ctx.arc(75, 75, 60, -Math.PI / 2, (-Math.PI / 2) + (score / 100) * 2 * Math.PI);
-      ctx.strokeStyle = color;
-      ctx.lineWidth = 10;
-      ctx.stroke();
-      ctx.font = '20px Poppins';
-      ctx.fillStyle = color;
-      ctx.textAlign = 'center';
-      ctx.fillText(score, 75, 80);
-    }
-    drawGauge(academicGauge, 44, '#EF4444');
-
-    // Academic Trend Graph
-    const academicTrend = document.getElementById('academic-trend').getContext('2d');
-    new Chart(academicTrend, {
-      type: 'line',
-      data: {
-        labels: ['Apr 18', 'Apr 19', 'Apr 20', 'Apr 21', 'Apr 22', 'Apr 23', 'Apr 24'],
-        datasets: [{ label: 'Academic', data: [60, 55, 50, 45, 40, 40, 44], borderColor: '#EF4444', fill: false }]
-      },
-      options: { responsive: true, animation: { duration: 1000 } }
-    });
-
-    // Radar Chart for All Categories
-    const radarChart = document.getElementById('radar-chart').getContext('2d');
-    new Chart(radarChart, {
-      type: 'radar',
-      data: {
-        labels: ['Academic', 'Financial', 'Health', 'Housing', 'Social'],
-        datasets: [{
-          label: 'Stress Scores',
-          data: [44, 50, 70, 60, 55],
-          backgroundColor: 'rgba(147, 51, 234, 0.2)',
-          borderColor: '#9333EA',
-          pointBackgroundColor: '#9333EA'
-        }]
-      },
-      options: { responsive: true, animation: { duration: 1500 } }
-    });
-
-    // Action Logging
-    document.querySelector('#academic form').addEventListener('submit', (e) => {
-      e.preventDefault();
-      const action = document.getElementById('academic-action').value;
-      alert(`Action logged: ${action}`);
-      document.getElementById('academic-action').value = '';
-    });
-  </script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
+  <script src="static/script.js"></script>
 </body>
 </html>

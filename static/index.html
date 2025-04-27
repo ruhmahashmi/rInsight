@@ -1,0 +1,807 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>rInsight - Campus Mental Health</title>
+  <!-- CDN Scripts with Error Logging -->
+  <script src="https://cdn.jsdelivr.net/npm/react@18.2.0/umd/react.development.js" 
+          onerror="console.error('Failed to load React from CDN'); document.getElementById('cdn-error').style.display = 'block';"></script>
+  <script src="https://cdn.jsdelivr.net/npm/react-dom@18.2.0/umd/react-dom.development.js" 
+          onerror="console.error('Failed to load ReactDOM from CDN'); document.getElementById('cdn-error').style.display = 'block';"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.22.9/babel.min.js" 
+          onerror="console.error('Failed to load Babel from CDN'); document.getElementById('cdn-error').style.display = 'block';"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js" 
+          onerror="console.error('Failed to load Chart.js from CDN');"></script>
+  <script src="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.js" 
+          onerror="console.error('Failed to load Flatpickr from CDN');"></script>
+  <script src="https://cdn.tailwindcss.com" 
+          onerror="console.error('Failed to load TailwindCSS from CDN');"></script>
+  <link href="https://cdn.jsdelivr.net/npm/flatpickr@4.6.13/dist/flatpickr.min.css" rel="stylesheet" 
+        onerror="console.error('Failed to load Flatpickr CSS from CDN');">
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;900&display=swap" rel="stylesheet" 
+        onerror="console.error('Failed to load Montserrat font from CDN');">
+  <style>
+    body {
+      font-family: 'Montserrat', sans-serif;
+      background: #F5F5F4;
+      color: #1E3A8A;
+    }
+    .card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 20px;
+      padding: 2.5rem;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .card:hover {
+      transform: scale(1.02);
+      box-shadow: 0 12px 32px rgba(45, 212, 191, 0.3);
+    }
+    .gauge, .trend, .bar-graph {
+      opacity: 0;
+      animation: fadeIn 1s forwards;
+    }
+    @keyframes fadeIn {
+      to { opacity: 1; }
+    }
+    .alert-pulse {
+      animation: pulse 2s infinite;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.05); }
+      100% { transform: scale(1); }
+    }
+    .gradient-text {
+      background: linear-gradient(to right, #2DD4BF, #F472B6);
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+    .tab {
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+    .tab:hover, .tab.active {
+      background: linear-gradient(to right, #2DD4BF, #F472B6);
+      color: #FFFFFF;
+      box-shadow: 0 4px 12px rgba(45, 212, 191, 0.4);
+    }
+    .sub-tab {
+      transition: background 0.3s ease;
+    }
+    .sub-tab:hover, .sub-tab.active {
+      background: #F472B6;
+      color: #FFFFFF;
+    }
+    .spinner {
+      border: 4px solid #2DD4BF;
+      border-top: 4px solid #F472B6;
+      border-radius: 50%;
+      width: 40px;
+      height: 40px;
+      animation: spin 1s linear infinite;
+      margin: auto;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .tooltip {
+      position: relative;
+    }
+    .tooltip .tooltip-text {
+      visibility: hidden;
+      width: 200px;
+      background: #1E3A8A;
+      color: #FFFFFF;
+      text-align: center;
+      border-radius: 8px;
+      padding: 8px;
+      position: absolute;
+      z-index: 10;
+      bottom: 125%;
+      left: 50%;
+      transform: translateX(-50%);
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+    .tooltip:hover .tooltip-text {
+      visibility: visible;
+      opacity: 1;
+    }
+    .resource-button {
+      background: #FBBF24;
+      color: #1E3A8A;
+      font-weight: 600;
+      padding: 0.5rem 1rem;
+      border-radius: 8px;
+      transition: background 0.3s ease;
+    }
+    .resource-button:hover {
+      background: #F59E0B;
+    }
+    #cdn-error {
+      display: none;
+      color: #F472B6;
+      text-align: center;
+      padding: 2rem;
+      font-size: 1.2rem;
+    }
+  </style>
+</head>
+<body>
+  <div id="cdn-error">
+    <p>Failed to load required scripts. Please check your internet connection or try refreshing the page.</p>
+  </div>
+  <div id="root">
+    <div className="min-h-screen p-8">
+      <header className="flex flex-col sm:flex-row justify-between items-center mb-8">
+        <div>
+          <h1 className="text-4xl font-extrabold gradient-text">rInsight</h1>
+          <p className="text-base text-gray-600">Loading...</p>
+        </div>
+      </header>
+    </div>
+  </div>
+  <script type="text/babel">
+    console.log("Starting React app...");
+    if (typeof React === 'undefined' || typeof ReactDOM === 'undefined' || typeof Babel === 'undefined') {
+      console.error("React, ReactDOM, or Babel failed to load. Please check CDN connectivity.");
+      document.getElementById('cdn-error').style.display = 'block';
+    } else {
+      console.log("React, ReactDOM, and Babel loaded successfully.");
+    }
+
+    const { useState, useEffect, useRef } = React;
+
+    class Fixture {
+      static getSampleData() {
+        return {
+          overall: {
+            score: 17,
+            status: "Critical",
+            color: "#F472B6",
+            recommendation: "I recommend you explore Drexel's Resident Life resources for assistance with finding suitable on-campus or off-campus housing.",
+            recommendation_explanation: "The keywords heavily emphasize housing concerns, making Resident Life the most relevant resource.",
+            secondary_recommendation: "I recommend contacting Drexel's Resident Life office for assistance with your housing concerns.",
+            secondary_recommendation_explanation: "The student issue category is 'housing', and several keywords relate to on-campus or off-campus housing.",
+            trend_labels: ["2025-04-01", "2025-04-02", "2025-04-03"],
+            trend_data: [17, 17, 17]
+          },
+          academic: { 
+            score: 17, 
+            status: "Critical", 
+            color: "#F472B6", 
+            recommendation: "I suggest contacting the Counseling Center for support with your academic worries and concerns.", 
+            recommendation_explanation: "The keywords 'worried', 'unsure', 'hard' suggest academic stress or anxiety.", 
+            trend_labels: ["2025-04-01"], 
+            trend_data: [17] 
+          },
+          financial: { 
+            score: 70, 
+            status: "Low", 
+            color: "#2DD4BF", 
+            recommendation: "Continue monitoring financial stress.", 
+            recommendation_explanation: "Financial stress is low.", 
+            trend_labels: ["2025-04-01"], 
+            trend_data: [70] 
+          },
+          health: { 
+            score: 70, 
+            status: "Low", 
+            color: "#2DD4BF", 
+            recommendation: "Continue mental health support.", 
+            recommendation_explanation: "Health stress is low.", 
+            trend_labels: ["2025-04-01"], 
+            trend_data: [70] 
+          },
+          housing: { 
+            score: 17, 
+            status: "Critical", 
+            color: "#F472B6", 
+            recommendation: "I recommend contacting Drexel's Resident Life office for assistance with your housing concerns.", 
+            recommendation_explanation: "The student issue category is 'housing'.", 
+            trend_labels: ["2025-04-01"], 
+            trend_data: [17] 
+          },
+          social: { 
+            score: 75, 
+            status: "Low", 
+            color: "#2DD4BF", 
+            recommendation: "Encourage club participation.", 
+            recommendation_explanation: "Social stress is low.", 
+            trend_labels: ["2025-04-01"], 
+            trend_data: [75] 
+          },
+          category_counts: { academic: 4, financial: 0, health: 0, housing: 5, social: 0 },
+          summary: "Campus mental health from 2025-04-01 to 2025-04-27: High stress"
+        };
+      }
+
+      static getSampleKeywords() {
+        return [
+          { keyword: "exam", frequency: 3, category: "academic", sample: "Stressed about exams!" },
+          { keyword: "tuition", frequency: 2, category: "financial", sample: "Can't afford tuition." },
+          { keyword: "dorm", frequency: 5, category: "housing", sample: "Looking for a quiet dorm." }
+        ];
+      }
+
+      static getSampleInsights() {
+        return [
+          { title: "Feeling overwhelmed with finals", category: "academic" },
+          { title: "Looking for a cheap apartment near campus", category: "housing" }
+        ];
+      }
+    }
+
+    class ErrorBoundary extends React.Component {
+      state = { hasError: false, error: null };
+      static getDerivedStateFromError(error) {
+        console.error("ErrorBoundary caught an error:", error);
+        return { hasError: true, error };
+      }
+      render() {
+        if (this.state.hasError) {
+          return (
+            <div className="card bg-pink-100 border-pink-400 m-8">
+              <h3 className="text-lg font-semibold text-pink-800">Something Went Wrong</h3>
+              <p className="text-pink-700">Error: {this.state.error?.message || "Unknown error"}. Please check the console for details and try refreshing the page.</p>
+            </div>
+          );
+        }
+        return this.props.children;
+      }
+    }
+
+    const App = () => {
+      const [dateRange, setDateRange] = useState({ start: "2025-04-01", end: "2025-04-27" });
+      const [stressScores, setStressScores] = useState({});
+      const [keywords, setKeywords] = useState([]);
+      const [recentInsights, setRecentInsights] = useState([]);
+      const [alerts, setAlerts] = useState([]);
+      const [activeTab, setActiveTab] = useState("dashboard");
+      const [activeCategory, setActiveCategory] = useState("academic");
+      const [keywordFilter, setKeywordFilter] = useState("all");
+      const [loading, setLoading] = useState(false);
+      const [error, setError] = useState(null);
+      const [useSampleData, setUseSampleData] = useState(true); // Start with sample data
+      const categories = ["academic", "financial", "health", "housing", "social"];
+      const chartRefs = useRef({});
+      const canvasRefs = useRef({});
+
+      const initializeCharts = () => {
+        console.log("Initializing charts...");
+        if (typeof Chart === 'undefined') {
+          console.error("Chart.js is not loaded. Skipping chart initialization.");
+          return;
+        }
+
+        Object.values(chartRefs.current).forEach(chart => chart?.destroy());
+        chartRefs.current = {};
+
+        const overallGaugeCtx = canvasRefs.current['overall-gauge']?.getContext('2d');
+        if (overallGaugeCtx && stressScores.overall && typeof stressScores.overall.score === 'number') {
+          console.log('Rendering overall gauge with score:', stressScores.overall.score);
+          chartRefs.current['overall-gauge'] = new Chart(overallGaugeCtx, {
+            type: 'doughnut',
+            data: {
+              datasets: [{
+                data: [stressScores.overall.score, 100 - stressScores.overall.score],
+                backgroundColor: [stressScores.overall.color, '#E5E7EB'],
+                borderWidth: 0,
+              }],
+            },
+            options: {
+              cutout: '80%',
+              plugins: { legend: { display: false } },
+              animation: { duration: 1500, easing: 'easeOutQuart' },
+            },
+          });
+        } else {
+          console.error('Overall gauge failed:', {
+            canvas: !!overallGaugeCtx,
+            data: !!stressScores.overall,
+            score: stressScores.overall?.score
+          });
+        }
+
+        const overallTrendCtx = canvasRefs.current['overall-trend']?.getContext('2d');
+        if (overallTrendCtx && stressScores.overall && Array.isArray(stressScores.overall.trend_data)) {
+          console.log('Rendering overall trend with data:', stressScores.overall.trend_data);
+          chartRefs.current['overall-trend'] = new Chart(overallTrendCtx, {
+            type: 'line',
+            data: {
+              labels: stressScores.overall.trend_labels || [],
+              datasets: [{
+                data: stressScores.overall.trend_data || [],
+                borderColor: stressScores.overall.color,
+                backgroundColor: stressScores.overall.color + '33',
+                fill: true,
+                tension: 0.4,
+              }],
+            },
+            options: {
+              scales: {
+                y: { beginAtZero: true, max: 100, grid: { color: '#E5E7EB' } },
+                x: { grid: { display: false } },
+              },
+              plugins: { legend: { display: false } },
+              animation: { duration: 1500, easing: 'easeInOutQuad' },
+            },
+          });
+        } else {
+          console.error('Overall trend failed:', {
+            canvas: !!overallTrendCtx,
+            data: !!stressScores.overall,
+            trendData: stressScores.overall?.trend_data
+          });
+        }
+
+        const issueBreakdownCtx = canvasRefs.current['issue-breakdown']?.getContext('2d');
+        if (issueBreakdownCtx && stressScores.category_counts) {
+          console.log('Rendering issue breakdown with counts:', stressScores.category_counts);
+          chartRefs.current['issue-breakdown'] = new Chart(issueBreakdownCtx, {
+            type: 'bar',
+            data: {
+              labels: ['Health', 'Financial', 'Academic', 'Housing', 'Social'],
+              datasets: [{
+                label: 'Issue Distribution',
+                data: [
+                  stressScores.category_counts.health,
+                  stressScores.category_counts.financial,
+                  stressScores.category_counts.academic,
+                  stressScores.category_counts.housing,
+                  stressScores.category_counts.social
+                ],
+                backgroundColor: '#1E3A8A',
+                borderWidth: 0,
+              }],
+            },
+            options: {
+              indexAxis: 'x',
+              scales: {
+                y: { beginAtZero: true, grid: { display: false } },
+                x: {
+                  ticks: { 
+                    autoSkip: false,
+                    maxRotation: 45,
+                    minRotation: 45,
+                  },
+                  grid: { display: false }
+                },
+              },
+              plugins: { legend: { display: true, position: 'top' } },
+              animation: { duration: 1500, easing: 'easeInOutQuad' },
+            },
+          });
+        } else {
+          console.error('Issue breakdown failed:', {
+            canvas: !!issueBreakdownCtx,
+            data: !!stressScores.category_counts
+          });
+        }
+
+        categories.forEach(cat => {
+          const gaugeCtx = canvasRefs.current[`${cat}-gauge`]?.getContext('2d');
+          if (gaugeCtx && stressScores[cat] && typeof stressScores[cat].score === 'number') {
+            console.log(`Rendering ${cat} gauge with score:`, stressScores[cat].score);
+            chartRefs.current[`${cat}-gauge`] = new Chart(gaugeCtx, {
+              type: 'doughnut',
+              data: {
+                datasets: [{
+                  data: [stressScores[cat].score, 100 - stressScores[cat].score],
+                  backgroundColor: [stressScores[cat].color, '#E5E7EB'],
+                  borderWidth: 0,
+                }],
+              },
+              options: {
+                cutout: '80%',
+                plugins: { legend: { display: false } },
+                animation: { duration: 1500, easing: 'easeOutQuart' },
+              },
+            });
+          } else {
+            console.error(`${cat} gauge failed:`, {
+              canvas: !!gaugeCtx,
+              data: !!stressScores[cat],
+              score: stressScores[cat]?.score
+            });
+          }
+
+          const trendCtx = canvasRefs.current[`${cat}-trend`]?.getContext('2d');
+          if (trendCtx && stressScores[cat] && Array.isArray(stressScores[cat].trend_data)) {
+            console.log(`Rendering ${cat} trend with data:`, stressScores[cat].trend_data);
+            chartRefs.current[`${cat}-trend`] = new Chart(trendCtx, {
+              type: 'line',
+              data: {
+                labels: stressScores[cat].trend_labels || [],
+                datasets: [{
+                  data: stressScores[cat].trend_data || [],
+                  borderColor: stressScores[cat].color,
+                  backgroundColor: stressScores[cat].color + '33',
+                  fill: true,
+                  tension: 0.4,
+                }],
+              },
+              options: {
+                scales: {
+                  y: { beginAtZero: true, max: 100, grid: { color: '#E5E7EB' } },
+                  x: { grid: { display: false } },
+                },
+                plugins: { legend: { display: false } },
+                animation: { duration: 1500, easing: 'easeInOutQuad' },
+              },
+            });
+          } else {
+            console.error(`${cat} trend failed:`, {
+              canvas: !!trendCtx,
+              data: !!stressScores[cat],
+              trendData: stressScores[cat]?.trend_data
+            });
+          }
+        });
+      };
+
+      useEffect(() => {
+        console.log("Fetching data for date range:", dateRange);
+        setLoading(true);
+        setError(null);
+
+        if (useSampleData) {
+          console.log("Using sample data...");
+          setStressScores(Fixture.getSampleData());
+          setKeywords(Fixture.getSampleKeywords());
+          setRecentInsights(Fixture.getSampleInsights());
+          setAlerts(["Academic stress is critical!", "Housing stress is critical!"]);
+          setLoading(false);
+          return;
+        }
+
+        Promise.all([
+          fetch(`/api/stress-scores/${dateRange.start}/${dateRange.end}`, { timeout: 10000 })
+            .then(res => {
+              if (!res.ok) throw new Error(`HTTP ${res.status}: Failed to fetch stress scores`);
+              return res.json();
+            })
+            .then(data => {
+              console.log('Stress scores:', data);
+              if (!data.overall) throw new Error('Missing overall data');
+              setStressScores(data);
+              setAlerts(Object.keys(data).filter(k => data[k]?.status === "Critical" && k !== "overall").map(k => `${k.charAt(0).toUpperCase() + k.slice(1)} stress is critical!`));
+            })
+            .catch(err => {
+              console.error('Error fetching stress scores:', err);
+              setError('Failed to load stress data. Using sample data instead.');
+              setUseSampleData(true);
+            }),
+          fetch(`/api/keywords/${dateRange.start}/${dateRange.end}`, { timeout: 10000 })
+            .then(res => {
+              if (!res.ok) throw new Error(`HTTP ${res.status}: Failed to fetch keywords`);
+              return res.json();
+            })
+            .then(data => {
+              console.log('Keywords:', data);
+              setKeywords(data);
+            })
+            .catch(err => {
+              console.error('Error fetching keywords:', err);
+              setError(prev => prev || 'Failed to load keyword data. Using sample data instead.');
+              setUseSampleData(true);
+            }),
+          fetch(`/api/recent-insights/${dateRange.start}/${dateRange.end}`, { timeout: 10000 })
+            .then(res => {
+              if (!res.ok) throw new Error(`HTTP ${res.status}: Failed to fetch recent insights`);
+              return res.json();
+            })
+            .then(data => {
+              console.log('Recent insights:', data);
+              setRecentInsights(data);
+            })
+            .catch(err => {
+              console.error('Error fetching recent insights:', err);
+              setError(prev => prev || 'Failed to load recent insights. Using sample data instead.');
+              setUseSampleData(true);
+            })
+        ]).finally(() => {
+          console.log("Data fetching complete. Loading state:", false);
+          setLoading(false);
+        });
+      }, [dateRange, useSampleData]);
+
+      useEffect(() => {
+        console.log("Stress scores updated:", stressScores);
+        if (Object.keys(stressScores).length === 0) return;
+        const timer = setTimeout(() => {
+          console.log("Attempting to initialize charts...");
+          initializeCharts();
+        }, 100);
+        return () => clearTimeout(timer);
+      }, [stressScores]);
+
+      useEffect(() => {
+        if (typeof flatpickr === 'undefined') {
+          console.error("Flatpickr is not loaded. Date picker will not function.");
+          return;
+        }
+        console.log("Initializing Flatpickr...");
+        flatpickr("#date-picker", {
+          mode: "range",
+          dateFormat: "Y-m-d",
+          defaultDate: [dateRange.start, dateRange.end],
+          onChange: ([start, end]) => {
+            if (start && end) {
+              console.log("Date range changed:", { start, end });
+              setDateRange({ start: start.toISOString().split('T')[0], end: end.toISOString().split('T')[0] });
+            }
+          },
+        });
+      }, []);
+
+      const filteredKeywords = keywordFilter === "all" ? keywords : keywords.filter(k => k.category === keywordFilter);
+
+      const renderTabContent = () => {
+        console.log("Rendering tab content. Active tab:", activeTab, "Loading:", loading, "Error:", error);
+        if (loading) {
+          return (
+            <div className="flex justify-center items-center h-64">
+              <div className="spinner"></div>
+            </div>
+          );
+        }
+        if (error) {
+          return (
+            <div className="card bg-pink-100 border-pink-400">
+              <p className="text-pink-800">{error}</p>
+              <button
+                className="mt-4 bg-teal-500 text-white px-4 py-2 rounded-lg"
+                onClick={() => {
+                  setUseSampleData(true);
+                  setError(null);
+                  setLoading(true);
+                }}
+              >
+                Retry with Sample Data
+              </button>
+            </div>
+          );
+        }
+        if (activeTab === "dashboard") {
+          return (
+            <div>
+              {alerts.length > 0 && (
+                <div className="card alert-pulse mb-8 bg-pink-100 border-pink-400">
+                  <h3 className="text-lg font-semibold text-pink-800 gradient-text">Critical Alerts</h3>
+                  <ul className="list-disc pl-5 text-pink-700">{alerts.map((alert, i) => <li key={i}>{alert}</li>)}</ul>
+                </div>
+              )}
+              <div className="card mb-8">
+                <h3 className="text-2xl font-bold gradient-text">Overall Campus Mental Health</h3>
+                <p className="text-base text-gray-600 mb-4">Aggregated stress score from r/Drexel posts, combining sentiment, keyword frequency, engagement, and academic stress peaks (e.g., midterms).</p>
+                <div className="flex flex-col md:flex-row gap-8">
+                  <div className="w-full md:w-1/3">
+                    <div className="tooltip">
+                      <canvas ref={el => canvasRefs.current['overall-gauge'] = el} id="overall-gauge" className="gauge mx-auto" width="200" height="200"></canvas>
+                      <span className="tooltip-text">Score &lt;50: Critical stress; 50-70: Moderate; &gt;70: Low. Based on negative sentiment, keyword density, and post activity.</span>
+                    </div>
+                    <p className="text-center mt-4 text-lg" style={{ color: stressScores.overall?.color }}>
+                      {stressScores.overall?.status || "Loading"}: Score {stressScores.overall?.score || 0}
+                    </p>
+                  </div>
+                  <div className="w-full md:w-2/3">
+                    <canvas ref={el => canvasRefs.current['overall-trend'] = el} id="overall-trend" className="trend" height="200"></canvas>
+                  </div>
+                </div>
+                <p className="text-base mt-6 text-gray-600">{stressScores.summary || "Loading insights..."}</p>
+              </div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-8">
+                <div className="card">
+                  <h3 className="text-xl font-bold gradient-text">Issue Breakdown</h3>
+                  <p className="text-base text-gray-600 mb-4">Distribution of posts across stress categories.</p>
+                  <canvas ref={el => canvasRefs.current['issue-breakdown'] = el} id="issue-breakdown" className="bar-graph" height="200"></canvas>
+                </div>
+                <div className="card">
+                  <h3 className="text-xl font-bold gradient-text">Recent Insights</h3>
+                  <p className="text-base text-gray-600 mb-4">Latest student concerns from r/Drexel posts.</p>
+                  {recentInsights.length > 0 ? (
+                    recentInsights.map((insight, i) => (
+                      <div key={i} className="mb-4">
+                        <p className="text-base text-gray-800">"{insight.title}"</p>
+                        <p className="text-sm text-gray-600">{insight.category.charAt(0).toUpperCase() + insight.category.slice(1)}</p>
+                      </div>
+                    ))
+                  ) : (
+                    <p className="text-base text-gray-600">No recent insights available.</p>
+                  )}
+                </div>
+              </div>
+              <div className="card">
+                <h3 className="text-xl font-bold gradient-text">Recommended Actions</h3>
+                <p className="text-base text-gray-600 mb-4">Steps to address identified stress concerns.</p>
+                <div className="space-y-4">
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-base text-gray-800">{stressScores.overall?.recommendation || "Loading..."}</p>
+                      <p className="text-sm text-gray-500">{stressScores.overall?.recommendation_explanation || "Loading explanation..."}</p>
+                    </div>
+                    <a href={stressScores.overall?.recommendation?.includes("Counseling Center") ? "https://drexel.edu/counselingandhealth/counseling-center" : "#"} className="resource-button">View Resource</a>
+                  </div>
+                  <div className="flex items-center justify-between">
+                    <div>
+                      <p className="text-base text-gray-800">{stressScores.overall?.secondary_recommendation || "Loading..."}</p>
+                      <p className="text-sm text-gray-500">{stressScores.overall?.secondary_recommendation_explanation || "Loading explanation..."}</p>
+                    </div>
+                    <a href={stressScores.overall?.secondary_recommendation?.includes("Financial Services") ? "https://drexel.edu/studentlife/financial-services" : "#"} className="resource-button">View Resource</a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          );
+        } else if (activeTab === "categories") {
+          return (
+            <div>
+              <div className="flex space-x-4 mb-8">
+                {categories.map(cat => (
+                  <button
+                    key={cat}
+                    className={`sub-tab px-4 py-2 rounded-lg font-semibold ${activeCategory === cat ? "active bg-pink-400 text-white" : "bg-teal-100 text-teal-800"}`}
+                    onClick={() => setActiveCategory(cat)}
+                  >
+                    {cat.charAt(0).toUpperCase() + cat.slice(1)}
+                  </button>
+                ))}
+              </div>
+              <div className="card">
+                <h3 className="text-2xl font-bold gradient-text">{activeCategory.charAt(0).toUpperCase() + activeCategory.slice(1)}</h3>
+                <p className="text-base text-gray-600 mb-4">Stress score for {activeCategory} issues, derived from r/Drexel post analysis.</p>
+                <div className="flex flex-col md:flex-row gap-8">
+                  <div className="w-full md:w-1/3">
+                    <div className="tooltip">
+                      <canvas ref={el => canvasRefs.current[`${activeCategory}-gauge`] = el} id={`${activeCategory}-gauge`} className="gauge mx-auto" width="200" height="200"></canvas>
+                      <span className="tooltip-text">Score &lt;50: Critical stress; 50-70: Moderate; &gt;70: Low. Based on negative sentiment, keyword density, and post activity.</span>
+                    </div>
+                    <p className="text-center mt-4 text-lg" style={{ color: stressScores[activeCategory]?.color }}>
+                      {stressScores[activeCategory]?.status || "Loading"}: Score {stressScores[activeCategory]?.score || 0}
+                    </p>
+                  </div>
+                  <div className="w-full md:w-2/3">
+                    <canvas ref={el => canvasRefs.current[`${activeCategory}-trend`] = el} id={`${activeCategory}-trend`} className="trend" height="200"></canvas>
+                  </div>
+                </div>
+                <p className="text-base mt-6 text-gray-600"><strong>Recommendation:</strong> {stressScores[activeCategory]?.recommendation || "Loading..."}</p>
+                <p className="text-sm text-gray-500">{stressScores[activeCategory]?.recommendation_explanation || "Loading explanation..."}</p>
+              </div>
+            </div>
+          );
+        } else if (activeTab === "keywords") {
+          return (
+            <div className="card">
+              <h3 className="text-2xl font-bold gradient-text">Keyword Trends</h3>
+              <p className="text-base text-gray-600 mb-4">Frequent terms from r/Drexel posts, indicating key student concerns.</p>
+              <div className="mb-6">
+                <label htmlFor="keyword-filter" className="text-base text-gray-600 mr-2">Filter by Category:</label>
+                <select
+                  id="keyword-filter"
+                  className="bg-teal-100 text-teal-800 p-2 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400"
+                  value={keywordFilter}
+                  onChange={e => setKeywordFilter(e.target.value)}
+                >
+                  <option value="all">All</option>
+                  {categories.map(cat => (
+                    <option key={cat} value={cat}>{cat.charAt(0).toUpperCase() + cat.slice(1)}</option>
+                  ))}
+                </select>
+              </div>
+              <div className="overflow-x-auto">
+                <table className="w-full text-base mt-6">
+                  <thead>
+                    <tr className="border-b border-teal-300">
+                      <th className="py-3">Keyword</th>
+                      <th>Frequency</th>
+                      <th>Category</th>
+                      <th>Sample Post</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {filteredKeywords.map(k => (
+                      <tr key={k.keyword} className="border-b border-teal-200">
+                        <td className="py-3">{k.keyword}</td>
+                        <td>{k.frequency}</td>
+                        <td>{k.category}</td>
+                        <td>
+                          <a href="#" className="text-teal-600 hover:underline" onClick={() => alert(k.sample)}>
+                            {k.sample.slice(0, 30) + "..."}
+                          </a>
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          );
+        } else if (activeTab === "resources") {
+          return (
+            <div className="card">
+              <h3 className="text-2xl font-bold gradient-text">Drexel Resources</h3>
+              <p className="text-base text-gray-600 mb-4">Support services for Drexel students, tailored to identified issues.</p>
+              <ul className="text-base mt-6 space-y-3">
+                <li><a href="https://drexel.edu/academics/resources/math-resource-center" className="text-teal-600 hover:underline">Math Resource Center</a></li>
+                <li><a href="https://drexel.edu/counselingandhealth/counseling-center" className="text-teal-600 hover:underline">Counseling Center</a></li>
+                <li><a href="https://drexel.edu/studentlife/financial-services" className="text-teal-600 hover:underline">Student Financial Services</a></li>
+                <li><a href="https://drexel.edu/studentlife/resident-life" className="text-teal-600 hover:underline">Resident Life</a></li>
+                <li><a href="https://dragonlink.drexel.edu" className="text-teal-600 hover:underline">DragonLink (Clubs)</a></li>
+              </ul>
+              <h4 className="text-lg font-semibold mt-6 gradient-text">AI Recommendation</h4>
+              <p className="text-base text-gray-600">{stressScores.overall?.recommendation || "Loading..."}</p>
+              <p className="text-sm text-gray-500">{stressScores.overall?.recommendation_explanation || "Loading explanation..."}</p>
+            </div>
+          );
+        }
+      };
+
+      console.log("Rendering App component...");
+      return (
+        <ErrorBoundary>
+          <div className="min-h-screen p-8">
+            <header className="flex flex-col sm:flex-row justify-between items-center mb-8">
+              <div>
+                <h1 className="text-4xl font-extrabold gradient-text">rInsight</h1>
+                <p className="text-base text-gray-600">Anonymous mental health insights from r/Drexel to empower Drexel counselors</p>
+              </div>
+              <div className="flex items-center space-x-4 mt-4 sm:mt-0">
+                <input
+                  id="date-picker"
+                  className="bg-teal-100 text-teal-800 p-3 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-400"
+                  placeholder="Select date range"
+                />
+                <button
+                  className="bg-teal-500 text-white px-4 py-2 rounded-lg"
+                  onClick={() => {
+                    console.log("Switching to API data...");
+                    setUseSampleData(false);
+                    setError(null);
+                    setLoading(true);
+                  }}
+                >
+                  Use API Data
+                </button>
+              </div>
+            </header>
+            <nav className="flex space-x-4 mb-8 sticky top-0 bg-white/80 backdrop-blur-sm rounded-lg p-2 z-10">
+              {["dashboard", "categories", "keywords", "resources"].map(tab => (
+                <button
+                  key={tab}
+                  className={`tab px-6 py-3 rounded-lg font-semibold ${activeTab === tab ? "active" : "bg-teal-100 text-teal-800"}`}
+                  onClick={() => setActiveTab(tab)}
+                >
+                  {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                </button>
+              ))}
+            </nav>
+            <main className="max-w-7xl mx-auto">{renderTabContent()}</main>
+            <footer className="mt-8 text-center text-gray-600">
+              <p>© 2025 rInsight. Powered by Reddit & Gemini AI.</p>
+            </footer>
+          </div>
+        </ErrorBoundary>
+      );
+    };
+
+    try {
+      console.log("Attempting to render React app...");
+      ReactDOM.render(<App />, document.getElementById('root'));
+      console.log("React app rendered successfully.");
+    } catch (e) {
+      console.error("Failed to render React app:", e);
+      document.getElementById('root').innerHTML = `
+        <div class="card bg-pink-100 border-pink-400 m-8">
+          <h3 class="text-lg font-semibold text-pink-800">Rendering Error</h3>
+          <p class="text-pink-700">Failed to load the application: ${e.message}. Please check the console for details and try refreshing the page.</p>
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>

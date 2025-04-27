@@ -1,0 +1,38 @@
+[
+  {
+    "id": "1",
+    "title": "Struggling with finals stress",
+    "text": "I’m so overwhelmed with exams, can’t sleep.",
+    "date": "2025-04-15T10:00:00",
+    "upvotes": 15,
+    "comments": 5,
+    "sentiment": "negative",
+    "category": "academic",
+    "keywords": ["exam", "stress"],
+    "week": 16
+  },
+  {
+    "id": "2",
+    "title": "Textbook costs are insane",
+    "text": "Can’t afford books this term, any tips?",
+    "date": "2025-04-16T12:30:00",
+    "upvotes": 10,
+    "comments": 3,
+    "sentiment": "negative",
+    "category": "financial",
+    "keywords": ["tuition", "textbooks"],
+    "week": 16
+  },
+  {
+    "id": "3",
+    "title": "Feeling lonely on campus",
+    "text": "Missing out on clubs, FOMO is real.",
+    "date": "2025-04-17T15:45:00",
+    "upvotes": 8,
+    "comments": 2,
+    "sentiment": "negative",
+    "category": "social",
+    "keywords": ["friends", "FOMO"],
+    "week": 16
+  }
+]

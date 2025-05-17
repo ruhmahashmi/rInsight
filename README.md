@@ -5,7 +5,7 @@
 
 rInsight is a web application that analyzes live r/Drexel posts from Reddit to provide real-time mental health insights for Drexel University counselors. Built for DragonHacks 2025, it uses the Reddit API and Gemini AI to calculate stress scores, identify key concerns (e.g., housing, academics), and recommend campus resources.
 
-![rInsight Dashboard]([path/to/screenshot.png](https://devpost.com/software/xyz-bx5d04))  
+![rInsight Dashboard][([path/to/screenshot.png](https://devpost.com/software/xyz-bx5d04))  ](https://devpost.com/software/xyz-bx5d04)
 *Dashboard showing live stress scores with animated gauges and gradient text.*
 
 ## Features
